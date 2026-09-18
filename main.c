@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
+/*   Updated: 2026/09/18 17:50:20 by elara-va         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-bool	file_extension_check(char *file)
+t_bool	file_extension_check(char *file)
 {
 	size_t	file_name_len;
 	char	*extension;
@@ -16,11 +28,18 @@ bool	file_extension_check(char *file)
 
 int	main(int ac, char *av[])
 {
+	t_mlx_res	mlx_res;
+
 	if (ac != 2 || !file_extension_check(av[1]))
 	{
 		printf("This program takes one argument: "
 			"a scene description file with the .cub extension.\n");
 		exit(EXIT_FAILURE);
 	}
+
+	mlx_res.mlx_id = mlx_init();
+	if (!mlx_res.mlx_id)
+		exit(EXIT_FAILURE);
+
 	exit(EXIT_SUCCESS);
 }

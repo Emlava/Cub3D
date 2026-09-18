@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
+/*   Updated: 2026/09/18 17:46:31 by elara-va         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -15,6 +27,11 @@
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
 
-typedef int	bool;
+typedef int	t_bool;
+
+typedef struct s_mlx_resources
+{
+	void	*mlx_id;
+}	t_mlx_res;
 
 #endif
