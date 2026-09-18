@@ -22,6 +22,5 @@ int	main(int ac, char *av[])
 			"a scene description file with the .cub extension.\n");
 		exit(EXIT_FAILURE);
 	}
-	execvp("minilibx-linux/test/mlx-test", (char *const []){ NULL });
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
