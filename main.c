@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/18 17:50:20 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/19 12:08:40 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ int	main(int ac, char *av[])
 	mlx_res.mlx_id = mlx_init();
 	if (!mlx_res.mlx_id)
 		exit(EXIT_FAILURE);
+	mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.size_x, &mlx_res.size_y);
+	
+	// Create first image using the given map's starting position
+	
+	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.size_x, mlx_res.size_x, av[1]);
+	if (!mlx_res.win)
+	{
+		mlx_destroy_display(mlx_res.mlx_id);
+		exit(EXIT_FAILURE);
+	}
+	
+	// Put first image into the window
+	// Set hooks so that the image is modified according to the events
 
+	
+	mlx_loop(mlx_res.mlx_id);
 	exit(EXIT_SUCCESS);
 }

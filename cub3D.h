@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/18 17:46:31 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/19 11:40:09 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ typedef int	t_bool;
 typedef struct s_mlx_resources
 {
 	void	*mlx_id;
+	int		size_x;
+	int		size_y;
+	void	*win;
+	void	*img;
 }	t_mlx_res;
 
 #endif

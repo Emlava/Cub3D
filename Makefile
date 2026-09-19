@@ -18,7 +18,7 @@ obj/%.o: %.c
 	$(CC) $(REQUIRED_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBRARIES) $(OBJECTS)
-	$(CC) $(REQUIRED_FLAGS) $(LINKING_FLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+	$(CC) $(REQUIRED_FLAGS) $(OBJECTS) $(LIBRARIES) $(LINKING_FLAGS) -o $@
 
 clean:
 	$(MAKE) -C ./libft clean
