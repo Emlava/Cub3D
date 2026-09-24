@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/24 13:47:09 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/24 19:50:05 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,25 @@ void	store_file_info(int fd, t_map_res *map_res)
 		if (store_texture_or_color(line, map_res) == -1)
 		{
 			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n", line_count);
+			free(line);
+			close(fd);
 			exit(EXIT_FAILURE);
 		}
 		line_count++;
+		free(line);
+		line = get_next_line(fd);
 	}
 	while (line)
 	{
 		if (store_map_row(line, map_res) == -1)
 		{
 			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n", line_count);
+			free(line);
+			close(fd);
 			exit(EXIT_FAILURE);
 		}
+		free(line);
+		line = get_next_line(fd);
 		line_count++;
 	}
 	return ;
