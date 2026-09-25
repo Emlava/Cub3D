@@ -3,7 +3,7 @@ CC = cc
 REQUIRED_FLAGS = -Wall -Werror -Wextra
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
-OBJECTS = obj/main.o
+OBJECTS = obj/main.o obj/cleaning.o obj/parsing/process_file.o obj/parsing/utils.o
 
 .PHONY: all clean fclean re
 
