@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:42:54 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 13:43:48 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 18:09:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ t_bool	file_extension_check(char *file)
 	return (1);
 }
 
-void	skip_empty_space(char *line, int *i)
+// Only use when another reference to the original string is available
+// if needed to free
+void	ignore_leading_white_space(char **line)
 {
-	while (ft_isspace(line[*i]))
-		(*i)++;
+	while (ft_isspace(**line))
+		(*line)++;
 	return ;
 }
 

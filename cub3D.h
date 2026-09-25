@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 13:48:42 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 18:37:14 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,16 @@ typedef struct s_mlx_resources
 }	t_mlx_res;
 
 // parsing/process_file.c
-
+int		store_field(char *line, t_map_res *map_res);
+void	store_textures_and_colors(char **line, t_map_res *map_res,
+			int *line_count, int fd);
+void	store_map(char *line, t_map_res *map_res, int line_count, int fd);
+void	store_file_info(int fd, t_map_res *map_res);
+void	process_file(int ac, char *av[], t_map_res *map_res);
 
 // parsing/utils.c
 t_bool	file_extension_check(char *file);
-void	skip_empty_space(char *line, int *i);
+void	ignore_leading_white_space(char **line);
 t_bool	missing_field(t_map_res *map_res);
 
 
