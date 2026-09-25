@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/24 12:50:57 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 11:28:17 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include "minilibx-linux/mlx.h"
 # include "minilibx-linux/mlx_int.h"
 
+# define FALSE 0
+# define TRUE 1
+
 typedef int	t_bool;
 
 typedef struct s_map_resources
@@ -35,8 +38,8 @@ typedef struct s_map_resources
 	char			*south;
 	char			*west;
 	char			*east;
-	unsigned char	floor[3];
-	unsigned char	ceiling[3];
+	int				floor[3];
+	int 			ceiling[3];
 	char			**map;
 }	t_map_res;
 
@@ -48,5 +51,8 @@ typedef struct s_mlx_resources
 	void	*win;
 	void	*img;
 }	t_mlx_res;
+
+// cleaning.c
+void	free_map_res(t_map_res *map_res);
 
 #endif

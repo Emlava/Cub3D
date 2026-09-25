@@ -6,11 +6,23 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/24 19:50:05 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 11:50:20 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	init_map_res(t_map_res *map_res)
+{
+	map_res->north = NULL;
+	map_res->south = NULL;
+	map_res->west = NULL;
+	map_res->east = NULL;
+	map_res->ceiling[0] = -1;
+	map_res->floor[0] = -1;
+	map_res->map = NULL;
+	return ;
+}
 
 t_bool	file_extension_check(char *file)
 {
@@ -26,6 +38,76 @@ t_bool	file_extension_check(char *file)
 	return (1);
 }
 
+void	skip_empty_space(char *line, int *i)
+{
+	while (ft_isspace(line[*i]))
+		(*i)++;
+	return ;
+}
+
+int	store_texture_or_color(char *line, t_map_res *map_res) // LEFT OFF HERE
+{
+	int	i;
+
+	i = 0;
+	skip_empty_space(line, &i);
+	line += i;
+	if (!line)
+		return (0);
+	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2]))
+	{}
+	else if (ft_strncmp(line, "SO", 2) == 0 && ft_isspace(line[2]))
+	{}
+	else if (ft_strncmp(line, "EA", 2) == 0 && ft_isspace(line[2]))
+	{}
+	else if (ft_strncmp(line, "WE", 2) == 0 && ft_isspace(line[2]))
+	{}
+	else if (ft_strncmp(line, "C", 1) == 0 && ft_isspace(line[1]))
+	{}
+	else if (ft_strncmp(line, "F", 1) == 0 && ft_isspace(line[1]))
+	{}
+}
+
+t_bool	missing_field(t_map_res *map_res)
+{
+	if (!map_res->north || !map_res->south || !map_res->east
+		|| !map_res->west || map_res->ceiling[0] == -1 || map_res->floor[0] == -1)
+		return (TRUE);
+	return (FALSE);
+}
+
+void	process_textures_and_colors(char **line, t_map_res *map_res,
+	int *line_count, int fd)
+{
+	while (*line && line_is_not_map(*line))
+	{
+		if (store_texture_or_color(*line, map_res) == -1) //
+		{
+			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
+				*line_count);
+			free(*line);
+			close(fd);
+			exit(EXIT_FAILURE);
+		}
+		free(*line);
+		*line = get_next_line(fd);
+		(*line_count)++;
+	}
+	if (missing_field(map_res))
+	{
+		ft_dprintf(2, "Error\nMissing texture or color\n");
+		free(*line);
+		close(fd);
+		free_map_res(map_res);
+		exit(EXIT_FAILURE);
+	}
+	return ;
+}
+
+void	process_map(char *line, t_map_res *map_res, int line_count, int fd)
+{
+}
+
 void	store_file_info(int fd, t_map_res *map_res)
 {
 	char	*line;
@@ -33,24 +115,15 @@ void	store_file_info(int fd, t_map_res *map_res)
 
 	line = get_next_line(fd);
 	line_count = 1;
-	while (line && line_is_not_map(line))
-	{
-		if (store_texture_or_color(line, map_res) == -1)
-		{
-			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n", line_count);
-			free(line);
-			close(fd);
-			exit(EXIT_FAILURE);
-		}
-		line_count++;
-		free(line);
-		line = get_next_line(fd);
-	}
+	process_textures_and_colors(&line, map_res, &line_count, fd);
+
+	// Put in process_map()
 	while (line)
 	{
-		if (store_map_row(line, map_res) == -1)
+		if (store_map_row(line, map_res) == -1) //
 		{
-			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n", line_count);
+			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
+				line_count);
 			free(line);
 			close(fd);
 			exit(EXIT_FAILURE);
@@ -59,6 +132,7 @@ void	store_file_info(int fd, t_map_res *map_res)
 		line = get_next_line(fd);
 		line_count++;
 	}
+	//
 	return ;
 }
 
@@ -88,6 +162,7 @@ int	main(int ac, char *av[])
 	t_map_res	map_res;
 	t_mlx_res	mlx_res;
 
+	init_map_res(&map_res);
 	// Store the contents of the given file in the map struct while parsing
 	process_file(ac, av, &map_res);
 
