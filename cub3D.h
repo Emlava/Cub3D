@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 11:28:17 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:48:42 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ typedef struct s_mlx_resources
 	void	*win;
 	void	*img;
 }	t_mlx_res;
+
+// parsing/process_file.c
+
+
+// parsing/utils.c
+t_bool	file_extension_check(char *file);
+void	skip_empty_space(char *line, int *i);
+t_bool	missing_field(t_map_res *map_res);
+
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

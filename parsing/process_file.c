@@ -6,34 +6,13 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 12:45:24 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:53:10 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-t_bool	file_extension_check(char *file)
-{
-	size_t	file_name_len;
-	char	*extension;
-
-	file_name_len = ft_strlen(file);
-	if (file_name_len < 5)
-		return (0);
-	extension = ft_strnstr(file, ".cub", file_name_len);
-	if (!extension || *(extension + 4) != '\0')
-		return (0);
-	return (1);
-}
-
-void	skip_empty_space(char *line, int *i)
-{
-	while (ft_isspace(line[*i]))
-		(*i)++;
-	return ;
-}
-
-int	store_texture_or_color(char *line, t_map_res *map_res) // LEFT OFF HERE
+int	store_field(char *line, t_map_res *map_res) // LEFT OFF HERE
 {
 	int	i;
 
@@ -65,20 +44,12 @@ int	store_texture_or_color(char *line, t_map_res *map_res) // LEFT OFF HERE
 		return (-1);
 }
 
-t_bool	missing_field(t_map_res *map_res)
-{
-	if (!map_res->north || !map_res->south || !map_res->east
-		|| !map_res->west || map_res->ceiling[0] == -1 || map_res->floor[0] == -1)
-		return (TRUE);
-	return (FALSE);
-}
-
-void	process_textures_and_colors(char **line, t_map_res *map_res,
+void	store_textures_and_colors(char **line, t_map_res *map_res,
 	int *line_count, int fd)
 {
 	while (*line && line_is_not_map(*line))
 	{
-		if (store_texture_or_color(*line, map_res) == -1) //
+		if (store_field(*line, map_res) == -1) //
 		{
 			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
 				*line_count);
@@ -101,7 +72,7 @@ void	process_textures_and_colors(char **line, t_map_res *map_res,
 	return ;
 }
 
-void	process_map(char *line, t_map_res *map_res, int line_count, int fd)
+void	store_map(char *line, t_map_res *map_res, int line_count, int fd)
 {
 }
 
@@ -112,9 +83,9 @@ void	store_file_info(int fd, t_map_res *map_res)
 
 	line = get_next_line(fd);
 	line_count = 1;
-	process_textures_and_colors(&line, map_res, &line_count, fd);
+	store_textures_and_colors(&line, map_res, &line_count, fd);
 
-	// Put in process_map()
+	// Put in store_map()
 	while (line)
 	{
 		if (store_map_row(line, map_res) == -1) //
