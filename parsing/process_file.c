@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/29 21:24:06 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/29 21:26:36 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_bool	line_is_not_empty(char *line)
 	return (TRUE);
 }
 
-void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd) // KEEP GOING HERE
+void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 {
 	t_map_buff	*map_buff;
 	t_map_buff	*curr_node;
@@ -121,6 +121,9 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd) //
 		}
 	}
 	close(fd);
+
+	// KEEP GOING HERE
+
 	// Copy map_buff into map_res->map
 	free_map_buff(map_buff);
 	// Parse map using first_line_of_map to keep track of the lines in case an error message is needed
