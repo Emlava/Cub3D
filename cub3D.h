@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 18:37:14 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/29 20:36:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@
 # define FALSE 0
 # define TRUE 1
 
+// Things to free/close/destroy
+// -mlx_id
+// -win;
+// -img
+// -Everything from map_res;
+// -fd
+// -line
+// -map_buff nodes (not the row variables)
+
 typedef int	t_bool;
 
 typedef struct s_map_resources
@@ -41,7 +50,14 @@ typedef struct s_map_resources
 	int				floor[3];
 	int 			ceiling[3];
 	char			**map;
+	int				nbr_of_rows;
 }	t_map_res;
+
+typedef struct s_map_buff
+{
+	char				*row;
+	struct s_map_buff	*next;
+}	t_map_buff;
 
 typedef struct s_mlx_resources
 {
@@ -68,5 +84,6 @@ t_bool	missing_field(t_map_res *map_res);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);
+void	free_map_buff(t_map_buff *map_buff);
 
 #endif

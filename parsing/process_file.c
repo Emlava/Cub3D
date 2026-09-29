@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 18:35:09 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/29 21:24:06 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,70 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 	return ;
 }
 
-void	store_map(char *line, t_map_res *map_res, int line_count, int fd) // KEEP GOING HERE
+int	allocate_buff_node(t_map_buff *map_buff, t_map_res *map_res, char *line, int fd)
 {
+	map_buff = malloc(sizeof(t_map_buff));
+	if (!map_buff)
+	{
+		free_map_res(map_res);
+		free(line);
+		close (fd);
+		ft_dprintf(2, "malloc() failure\n");
+		return (-1);
+	}
+	map_buff->next = NULL;
+	return (0);
+}
+
+t_bool	line_is_not_empty(char *line)
+{
+	ignore_leading_white_space(&line);
+	if (!line)
+		return (FALSE);
+	return (TRUE);
+}
+
+void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd) // KEEP GOING HERE
+{
+	t_map_buff	*map_buff;
+	t_map_buff	*curr_node;
+
+	if (allocate_buff_node(map_buff, map_res, line, fd) == -1)
+		exit(EXIT_FAILURE);
+	curr_node = map_buff;
+	while (line && line_is_not_empty(line))
+	{
+		if (curr_node != map_buff)
+		{
+			if (allocate_buff_node(curr_node->next, map_res, line, fd) == -1)
+			{
+				free_map_buff(map_buff);
+				exit(EXIT_FAILURE);
+			}
+			curr_node = curr_node->next;
+		}
+		curr_node->row = line;
+		line = get_next_line(fd);
+	}
+	while (line) // If we enter this loop, the current line is empty
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line_is_not_empty(line))
+		{
+			free(line);
+			free_map_buff(map_buff);
+			free_map_res(map_res);
+			close(fd);
+			ft_dprintf(2, "Error\nSomething was found after the map\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	close(fd);
+	// Copy map_buff into map_res->map
+	free_map_buff(map_buff);
+	// Parse map using first_line_of_map to keep track of the lines in case an error message is needed
+	return ;
 }
 
 void	store_file_info(int fd, t_map_res *map_res)
@@ -73,23 +135,14 @@ void	store_file_info(int fd, t_map_res *map_res)
 	line = get_next_line(fd);
 	line_count = 1;
 	store_textures_and_colors(&line, map_res, &line_count, fd);
-
-	// Put in store_map()
-	while (line)
+	if (!line)
 	{
-		if (store_map_row(line, map_res) == -1) //
-		{
-			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
-				line_count);
-			free(line);
-			close(fd);
-			exit(EXIT_FAILURE);
-		}
-		free(line);
-		line = get_next_line(fd);
-		line_count++;
+		free_map_res(map_res);
+		close(fd);
+		ft_dprintf(2, "Error\nMissing map\n");
+		exit(EXIT_FAILURE);
 	}
-	//
+	store_map(line, map_res, line_count, fd);
 	return ;
 }
 

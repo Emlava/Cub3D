@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 11:23:12 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 11:27:54 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/29 20:36:43 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void	free_map_res(t_map_res *map_res)
 		while (map_res->map[i])
 			free(map_res->map[i++]);
 		free(map_res->map);
+	}
+	return ;
+}
+
+void	free_map_buff(t_map_buff *map_buff)
+{
+	t_map_buff	*tmp;
+
+	while (map_buff != NULL)
+	{
+		tmp = map_buff;
+		map_buff = map_buff->next;
+		free(tmp);
 	}
 	return ;
 }
