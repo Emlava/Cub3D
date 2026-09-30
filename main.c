@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 12:45:02 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/30 19:00:59 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_map_res(t_map_res *map_res)
 	map_res->ceiling[0] = -1;
 	map_res->floor[0] = -1;
 	map_res->map = NULL;
+	map_res->nbr_of_rows = 0;
 	return ;
 }
 

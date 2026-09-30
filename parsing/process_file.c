@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/29 21:26:36 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/30 19:34:53 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 	return ;
 }
 
-int	allocate_buff_node(t_map_buff *map_buff, t_map_res *map_res, char *line, int fd)
+int	allocate_buff_node(t_map_buff *node, t_map_res *map_res, char *line, int fd)
 {
-	map_buff = malloc(sizeof(t_map_buff));
-	if (!map_buff)
+	node = malloc(sizeof(t_map_buff));
+	if (!node)
 	{
 		free_map_res(map_res);
 		free(line);
@@ -72,7 +72,7 @@ int	allocate_buff_node(t_map_buff *map_buff, t_map_res *map_res, char *line, int
 		ft_dprintf(2, "malloc() failure\n");
 		return (-1);
 	}
-	map_buff->next = NULL;
+	node->next = NULL;
 	return (0);
 }
 
@@ -82,6 +82,48 @@ t_bool	line_is_not_empty(char *line)
 	if (!line)
 		return (FALSE);
 	return (TRUE);
+}
+
+void	check_file_after_map(char *line, int fd, t_map_buff *map_buff, t_map_res *map_res)
+{
+	while (line) // If we enter this loop, the current line is empty
+	{
+		free(line);
+		line = get_next_line(fd);
+		if (line_is_not_empty(line))
+		{
+			free(line);
+			free_map_buff(map_buff);
+			free_map_res(map_res);
+			close(fd);
+			ft_dprintf(2, "Error\nSomething was found after the map\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	return ;
+}
+
+void	copy_map_from_buff(t_map_res *map_res, t_map_buff *map_buff)
+{
+	int	i;
+
+	map_res->map = malloc(sizeof(char*) * (map_res->nbr_of_rows + 1));
+	if (!map_res->map)
+	{
+		free_map_buff(map_buff);
+		free_map_res(map_res);
+		ft_dprintf(2, "malloc() failure\n");
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < map_res->nbr_of_rows)
+	{
+		map_res->map[i] = map_buff->row;
+		i++;
+		map_buff = map_buff->next;	
+	}
+	map_res->map[i] = NULL;
+	return ;
 }
 
 void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
@@ -104,29 +146,14 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 			curr_node = curr_node->next;
 		}
 		curr_node->row = line;
+		map_res->nbr_of_rows++;
 		line = get_next_line(fd);
 	}
-	while (line) // If we enter this loop, the current line is empty
-	{
-		free(line);
-		line = get_next_line(fd);
-		if (line_is_not_empty(line))
-		{
-			free(line);
-			free_map_buff(map_buff);
-			free_map_res(map_res);
-			close(fd);
-			ft_dprintf(2, "Error\nSomething was found after the map\n");
-			exit(EXIT_FAILURE);
-		}
-	}
+	check_file_after_map(line, fd, map_buff, map_res);
 	close(fd);
-
-	// KEEP GOING HERE
-
-	// Copy map_buff into map_res->map
+	copy_map_from_buff(map_res, map_buff);
 	free_map_buff(map_buff);
-	// Parse map using first_line_of_map to keep track of the lines in case an error message is needed
+	// Parse map (using first_line_of_map to keep track of the lines in case an error message is needed)
 	return ;
 }
 
@@ -166,6 +193,5 @@ void	process_file(int ac, char *av[], t_map_res *map_res)
 		exit(EXIT_FAILURE);
 	}
 	store_file_info(fd, map_res);
-	close(fd);
 	return ;
 }
