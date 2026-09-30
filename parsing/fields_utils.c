@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   fields_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 18:33:34 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/30 20:45:00 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../cub3D.h"
 
 int	get_north_texture(char *line, t_map_res *map_res)
 {
@@ -63,6 +63,8 @@ int	get_color(char *line, t_map_res *map_res, char c)
 		else if (c == 'F')
 			map_res->floor[i++] = ft_atoi(line);
 		while (ft_isdigit(*line))
+			line++;
+		if (*line == ',')
 			line++;
 		ignore_leading_white_space(&line);
 	}

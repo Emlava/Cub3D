@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/29 20:36:56 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/30 20:07:45 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ t_bool	file_extension_check(char *file);
 void	ignore_leading_white_space(char **line);
 t_bool	missing_field(t_map_res *map_res);
 
+// parsing/fields_utils.c
+int	get_north_texture(char *line, t_map_res *map_res);
+int	get_south_texture(char *line, t_map_res *map_res);
+int	get_east_texture(char *line, t_map_res *map_res);
+int	get_west_texture(char *line, t_map_res *map_res);
+int	get_color(char *line, t_map_res *map_res, char c);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

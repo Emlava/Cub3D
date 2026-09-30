@@ -3,7 +3,8 @@ CC = cc
 REQUIRED_FLAGS = -Wall -Werror -Wextra
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
-OBJECTS = obj/main.o obj/cleaning.o obj/parsing/process_file.o obj/parsing/utils.o
+OBJECTS = obj/main.o obj/cleaning.o obj/parsing/process_file.o obj/parsing/utils.o obj/parsing/fields_utils.o
+
 
 .PHONY: all clean fclean re
 
@@ -15,6 +16,7 @@ $(LIBRARIES):
 
 obj/%.o: %.c
 	mkdir -p obj
+	mkdir -p obj/parsing
 	$(CC) $(REQUIRED_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBRARIES) $(OBJECTS)

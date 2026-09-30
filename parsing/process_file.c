@@ -6,15 +6,33 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/30 19:34:53 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/09/30 20:46:12 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	Things the program should be able to catch so far:
+	-Missing fields
+	-Invalid fields
+	-Repeated fields
+	-Missing map
+	-Content after map
+*/
+
 #include "../cub3D.h"
+
+t_bool	line_is_not_map(char *line)
+{
+	while (*line == '1' || *line == ' ')
+		line++;
+	if (*line)
+		return (TRUE);
+	return (FALSE);
+}
 
 int	store_field(char *line, t_map_res *map_res)
 {
-	ignore_leading_white_space(line);
+	ignore_leading_white_space(&line);
 	if (!(*line))
 		return (0);
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2]))
@@ -38,7 +56,7 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 {
 	while (*line && line_is_not_map(*line))
 	{
-		if (store_field(*line, map_res) == -1) //
+		if (store_field(*line, map_res) == -1)
 		{
 			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
 				*line_count);
@@ -61,10 +79,10 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 	return ;
 }
 
-int	allocate_buff_node(t_map_buff *node, t_map_res *map_res, char *line, int fd)
+int	allocate_buff_node(t_map_buff **node, t_map_res *map_res, char *line, int fd)
 {
-	node = malloc(sizeof(t_map_buff));
-	if (!node)
+	*node = malloc(sizeof(t_map_buff));
+	if (!*node)
 	{
 		free_map_res(map_res);
 		free(line);
@@ -72,7 +90,7 @@ int	allocate_buff_node(t_map_buff *node, t_map_res *map_res, char *line, int fd)
 		ft_dprintf(2, "malloc() failure\n");
 		return (-1);
 	}
-	node->next = NULL;
+	(*node)->next = NULL;
 	return (0);
 }
 
@@ -131,14 +149,14 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 	t_map_buff	*map_buff;
 	t_map_buff	*curr_node;
 
-	if (allocate_buff_node(map_buff, map_res, line, fd) == -1)
+	if (allocate_buff_node(&map_buff, map_res, line, fd) == -1)
 		exit(EXIT_FAILURE);
 	curr_node = map_buff;
 	while (line && line_is_not_empty(line))
 	{
 		if (curr_node != map_buff)
 		{
-			if (allocate_buff_node(curr_node->next, map_res, line, fd) == -1)
+			if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
 			{
 				free_map_buff(map_buff);
 				exit(EXIT_FAILURE);
@@ -154,6 +172,10 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 	copy_map_from_buff(map_res, map_buff);
 	free_map_buff(map_buff);
 	// Parse map (using first_line_of_map to keep track of the lines in case an error message is needed)
+	//
+	first_line_of_map++; // Just for the compiler not to complain now that we are not using this argument
+	first_line_of_map--; // Just for the compiler not to complain now that we are not using this argument
+	//
 	return ;
 }
 
@@ -172,6 +194,7 @@ void	store_file_info(int fd, t_map_res *map_res)
 		ft_dprintf(2, "Error\nMissing map\n");
 		exit(EXIT_FAILURE);
 	}
+	// Check for invalid colors and permissions for textures
 	store_map(line, map_res, line_count, fd);
 	return ;
 }
