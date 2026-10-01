@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:42:54 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 12:32:00 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/01 19:39:29 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ void	ignore_leading_white_space(char **line)
 	return ;
 }
 
-t_bool	missing_field(t_map_res *map_res)
+t_bool	line_is_not_empty(char *line)
 {
-	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
-		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
-		return (TRUE);
-	return (FALSE);
+	if (!line)
+		return (FALSE);
+	ignore_leading_white_space(&line);
+	if (*line == '\n')
+		return (FALSE);
+	return (TRUE);
 }
-

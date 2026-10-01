@@ -1,9 +1,10 @@
 NAME = cub3D
-CC = clang
+CC = cc
 REQUIRED_FLAGS = -Wall -Werror -Wextra -g
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
-OBJECTS = obj/main.o obj/cleaning.o obj/parsing/process_file.o obj/parsing/utils.o obj/parsing/fields_utils.o
+OBJECTS = obj/main.o obj/cleaning.o obj/parsing/process_file.o obj/parsing/utils.o obj/parsing/store_textures_and_colors.o \
+obj/parsing/field_utils.o obj/parsing/store_map.o
 
 
 .PHONY: all clean fclean re

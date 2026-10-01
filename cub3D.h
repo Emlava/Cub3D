@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 11:18:58 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/01 19:58:43 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,26 @@ typedef struct s_mlx_resources
 }	t_mlx_res;
 
 // parsing/process_file.c
-int		store_field(char *line, t_map_res *map_res);
-void	store_textures_and_colors(char **line, t_map_res *map_res,
-			int *line_count, int fd);
-void	store_map(char *line, t_map_res *map_res, int line_count, int fd);
-void	store_file_info(int fd, t_map_res *map_res);
 void	process_file(int ac, char *av[], t_map_res *map_res);
 
-// parsing/utils.c
-t_bool	file_extension_check(char *file);
-void	ignore_leading_white_space(char **line);
-t_bool	missing_field(t_map_res *map_res);
+// parsing/store_textures_and_colors.c
+void	store_textures_and_colors(char **line, t_map_res *map_res,
+			int *line_count, int fd);
 
-// parsing/fields_utils.c
+// parsing/field_utils.c
 int	get_north_texture(char *line, t_map_res *map_res);
 int	get_south_texture(char *line, t_map_res *map_res);
 int	get_east_texture(char *line, t_map_res *map_res);
 int	get_west_texture(char *line, t_map_res *map_res);
 int	get_color(char *line, t_map_res *map_res, char c);
+
+// store_map.c
+void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd);
+
+// parsing/utils.c
+t_bool	file_extension_check(char *file);
+void	ignore_leading_white_space(char **line);
+t_bool	line_is_not_empty(char *line);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

@@ -1,5 +1,5 @@
-NO ./path
-SO ./path
+NO 	 	 	 		./path
+SO  	./path/south
 WE ./path
 EA ./path
 C 220,100,0
