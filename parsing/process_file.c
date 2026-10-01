@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 12:59:54 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/01 18:06:53 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,14 @@ void	copy_map_from_buff(t_map_res *map_res, t_map_buff *map_buff)
 	return ;
 }
 
+void	store_and_update_line(t_map_buff *node, t_map_res *map_res, char **line, int fd)
+{
+	node->row = *line;
+	map_res->nbr_of_rows++;
+	*line = get_next_line(fd);
+	return ;
+}
+
 void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 {
 	t_map_buff	*map_buff;
@@ -158,29 +166,28 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 
 	if (allocate_buff_node(&map_buff, map_res, line, fd) == -1)
 		exit(EXIT_FAILURE);
+	store_and_update_line(map_buff, map_res, &line, fd);
 	curr_node = map_buff;
 	while (line && line_is_not_empty(line))
 	{
-		if (curr_node != map_buff) // LEFT OFF HERE! This condition is always true
+		if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
 		{
-			if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
-			{
-				free_map_buff(map_buff);
-				exit(EXIT_FAILURE);
-			}
-			curr_node = curr_node->next;
+			free_map_buff(map_buff);
+			exit(EXIT_FAILURE);
 		}
-		curr_node->row = line;
-		map_res->nbr_of_rows++;
-		line = get_next_line(fd);
+		curr_node = curr_node->next;
+		store_and_update_line(curr_node, map_res, &line, fd);
 	}
-	//
-	ft_printf("%s", map_buff->row);
-	//
 	check_file_after_map(line, fd, map_buff, map_res);
 	close(fd);
 	copy_map_from_buff(map_res, map_buff);
 	free_map_buff(map_buff);
+	//
+	int	i = 0;
+	
+	while (map_res->map[i])
+		ft_printf("%s", map_res->map[i++]);
+	//
 	// Parse map (using first_line_of_map to keep track of the lines in case an error message is needed)
 	//
 	first_line_of_map++; // Just for the compiler not to complain now that we are not using this argument
