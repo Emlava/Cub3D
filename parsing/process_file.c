@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/30 20:46:12 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/01 12:59:54 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,20 @@
 
 t_bool	line_is_not_map(char *line)
 {
-	while (*line == '1' || *line == ' ')
-		line++;
-	if (*line)
-		return (TRUE);
-	return (FALSE);
+	if (*line == '1' || *line == ' ')
+	{
+		while (*line == '1' || *line == ' ')
+			line++;
+		if (!*line || *line == '\n')
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
 int	store_field(char *line, t_map_res *map_res)
 {
 	ignore_leading_white_space(&line);
-	if (!(*line))
+	if (*line == '\n')
 		return (0);
 	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2]))
 		return (get_north_texture(line + 3, map_res));
@@ -43,9 +46,11 @@ int	store_field(char *line, t_map_res *map_res)
 		return (get_east_texture(line + 3, map_res));
 	else if (ft_strncmp(line, "WE", 2) == 0 && ft_isspace(line[2]))
 		return (get_west_texture(line + 3, map_res));
-	else if (line[0] == 'C' && ft_isspace(line[1]))
+	else if (line[0] == 'C' && ft_isspace(line[1])
+		&& map_res->ceiling_is_set == FALSE)
 		return (get_color(line + 2, map_res, 'C'));
-	else if (line[0] == 'F' && ft_isspace(line[1]))
+	else if (line[0] == 'F' && ft_isspace(line[1])
+		&& map_res->floor_is_set == FALSE)
 		return (get_color(line + 2, map_res, 'F'));
 	else
 		return (-1);
@@ -96,8 +101,10 @@ int	allocate_buff_node(t_map_buff **node, t_map_res *map_res, char *line, int fd
 
 t_bool	line_is_not_empty(char *line)
 {
-	ignore_leading_white_space(&line);
 	if (!line)
+		return (FALSE);
+	ignore_leading_white_space(&line);
+	if (*line == '\n')
 		return (FALSE);
 	return (TRUE);
 }
@@ -154,7 +161,7 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 	curr_node = map_buff;
 	while (line && line_is_not_empty(line))
 	{
-		if (curr_node != map_buff)
+		if (curr_node != map_buff) // LEFT OFF HERE! This condition is always true
 		{
 			if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
 			{
@@ -167,6 +174,9 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 		map_res->nbr_of_rows++;
 		line = get_next_line(fd);
 	}
+	//
+	ft_printf("%s", map_buff->row);
+	//
 	check_file_after_map(line, fd, map_buff, map_res);
 	close(fd);
 	copy_map_from_buff(map_res, map_buff);

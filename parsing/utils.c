@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:42:54 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/25 18:09:56 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/01 12:32:00 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ t_bool	file_extension_check(char *file)
 }
 
 // Only use when another reference to the original string is available
-// if needed to free
+// if needed to free. It does not ignore a '\n'
 void	ignore_leading_white_space(char **line)
 {
-	while (ft_isspace(**line))
+	while (**line != '\n' && ft_isspace(**line))
 		(*line)++;
 	return ;
 }
 
 t_bool	missing_field(t_map_res *map_res)
 {
-	if (!map_res->north || !map_res->south || !map_res->east
-		|| !map_res->west || map_res->ceiling[0] == -1 || map_res->floor[0] == -1)
+	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
+		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
 		return (TRUE);
 	return (FALSE);
 }
