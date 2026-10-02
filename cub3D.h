@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 19:58:43 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:07:06 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 
 # define FALSE 0
 # define TRUE 1
+# define PLAYERS_HEIGHT 32
+# define WORLDS_SIDE_LENGTH 64
+# define FOV 60
 
 // Things to free/close/destroy
 // -mlx_id
@@ -51,6 +54,7 @@ typedef struct s_map_resources
 	int				floor[3];
 	t_bool			ceiling_is_set;
 	t_bool			floor_is_set;
+	int				first_line_of_map;
 	char			**map;
 	int				nbr_of_rows;
 }	t_map_res;
@@ -61,17 +65,23 @@ typedef struct s_map_buff
 	struct s_map_buff	*next;
 }	t_map_buff;
 
+typedef struct s_player_resources
+{
+	int		coords[2];
+	float	viewing_angle;
+}	t_player_res;
+
 typedef struct s_mlx_resources
 {
 	void	*mlx_id;
-	int		size_x;
-	int		size_y;
+	int		screen_size_x;
+	int		screen_size_y;
 	void	*win;
 	void	*img;
 }	t_mlx_res;
 
 // parsing/process_file.c
-void	process_file(int ac, char *av[], t_map_res *map_res);
+void	process_file(int ac, char *av[], t_map_res *map_res, t_player_res *player);
 
 // parsing/store_textures_and_colors.c
 void	store_textures_and_colors(char **line, t_map_res *map_res,
@@ -84,8 +94,11 @@ int	get_east_texture(char *line, t_map_res *map_res);
 int	get_west_texture(char *line, t_map_res *map_res);
 int	get_color(char *line, t_map_res *map_res, char c);
 
-// store_map.c
-void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd);
+// parsing/store_map.c
+void	store_map(char *line, t_map_res *map_res, int fd);
+
+// parsing/parse_map.c
+void	parse_map(t_map_res *map_res, t_player_res *player);
 
 // parsing/utils.c
 t_bool	file_extension_check(char *file);

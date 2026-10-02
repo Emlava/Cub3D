@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 20:08:10 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 10:59:09 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,23 @@ void	init_map_res(t_map_res *map_res)
 
 int	main(int ac, char *av[])
 {
-	t_map_res	map_res;
+	t_map_res		map_res;
+	t_player_res	player;
+	
 	// t_mlx_res	mlx_res;
 
 	init_map_res(&map_res);
 	// Store the contents of the given file in the map struct while parsing
-	process_file(ac, av, &map_res);
+	process_file(ac, av, &map_res, &player);
 
 	// mlx_res.mlx_id = mlx_init();
 	// if (!mlx_res.mlx_id)
 	// 	exit(EXIT_FAILURE);
-	// mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.size_x, &mlx_res.size_y);
+	// mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.screen_size_x, &mlx_res.screen_size_y);
 	
 	// Create first image using the given map's starting position
 	
-	// mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.size_x, mlx_res.size_x, av[1]);
+	// mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size_x, mlx_res.screen_size_x, av[1]);
 	// if (!mlx_res.win)
 	// {
 	// 	mlx_destroy_display(mlx_res.mlx_id);

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 19:46:17 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:05:31 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 #include "../cub3D.h"
 
-static void	store_file_info(int fd, t_map_res *map_res) //
+static void	store_file_info(int fd, t_map_res *map_res, t_player_res *player)
 {
 	char	*line;
 	int		line_count;
@@ -37,11 +37,13 @@ static void	store_file_info(int fd, t_map_res *map_res) //
 		exit(EXIT_FAILURE);
 	}
 	// Check for invalid colors and permissions for textures
-	store_map(line, map_res, line_count, fd);
+	map_res->first_line_of_map = line_count;
+	store_map(line, map_res, fd);
+	parse_map(map_res, player);
 	return ;
 }
 
-void	process_file(int ac, char *av[], t_map_res *map_res) //
+void	process_file(int ac, char *av[], t_map_res *map_res, t_player_res *player)
 {
 	int	fd;
 
@@ -57,6 +59,6 @@ void	process_file(int ac, char *av[], t_map_res *map_res) //
 		perror(av[1]);
 		exit(EXIT_FAILURE);
 	}
-	store_file_info(fd, map_res);
+	store_file_info(fd, map_res, player);
 	return ;
 }

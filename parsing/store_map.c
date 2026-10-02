@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:40:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 19:58:50 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 10:40:17 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	copy_map_from_buff(t_map_res *map_res, t_map_buff *map_buff)
 	return ;
 }
 
-void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
+void	store_map(char *line, t_map_res *map_res, int fd)
 {
 	t_map_buff	*map_buff;
 	t_map_buff	*curr_node;
@@ -100,12 +100,6 @@ void	store_map(char *line, t_map_res *map_res, int first_line_of_map, int fd)
 	close(fd);
 	copy_map_from_buff(map_res, map_buff);
 	free_map_buff(map_buff);
-	
-	// Parse map (using first_line_of_map to keep track of the lines in case an error message is needed)
-	//
-	first_line_of_map++; // Just for the compiler not to complain now that we are not using this argument
-	first_line_of_map--; // Just for the compiler not to complain now that we are not using this argument
-	//
 	return ;
 }
 
