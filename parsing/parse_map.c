@@ -6,11 +6,33 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 18:21:04 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 18:55:00 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+static void	check_enclosure(t_map_res *map_res, int x, int y, int curr_line)
+{
+	int	last_grid_of_row;
+	int	last_row;
+
+	last_grid_of_row = ft_strlen(map_res->map[y]) - 2;
+	last_row = map_res->nbr_of_rows - 1;
+	// If the 0 is at the first or last columns
+	// If the 0 is at the last row (first is already covered when looking for the map
+	// after the fields)
+	// If the 0 is surrounded by a space
+
+	if (x == 0 || x == last_grid_of_row || y == last_row || )
+	{
+		free_map_res(map_res);
+		ft_dprintf(2, "Error\nEither the map is open or"
+			"a space was found inside an enclose are of the map.\n
+			Check ");
+		exit(EXIT_FAILURE);
+	}
+}
 
 static void	set_player_coords(int x, int y, t_player_res *player)
 {
@@ -49,9 +71,7 @@ void	parse_map(t_map_res *map_res, t_player_res *player)
 		{
 			value = map_res->map[y][x];
 			if (value == '0')
-			{
-				
-			}
+				check_enclosure(map_res, x, y);
 			else if ((value == 'N' || value == 'S' || value == 'W' || value == 'E')
 				&& player->coords[X] == -1)
 			{
