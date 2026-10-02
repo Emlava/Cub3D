@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 11:07:06 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 11:53:36 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 
 # define FALSE 0
 # define TRUE 1
+# define X 0
+# define Y 1
 # define PLAYERS_HEIGHT 32
 # define WORLDS_SIDE_LENGTH 64
 # define FOV 60
@@ -55,8 +57,8 @@ typedef struct s_map_resources
 	t_bool			ceiling_is_set;
 	t_bool			floor_is_set;
 	int				first_line_of_map;
-	char			**map;
 	int				nbr_of_rows;
+	char			**map;
 }	t_map_res;
 
 typedef struct s_map_buff
@@ -74,8 +76,7 @@ typedef struct s_player_resources
 typedef struct s_mlx_resources
 {
 	void	*mlx_id;
-	int		screen_size_x;
-	int		screen_size_y;
+	int		screen_size[2];
 	void	*win;
 	void	*img;
 }	t_mlx_res;
