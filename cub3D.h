@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 11:53:36 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/02 17:54:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_map_buff
 
 typedef struct s_player_resources
 {
-	int		coords[2];
-	float	viewing_angle;
+	int	coords[2];
+	int	viewing_angle;
 }	t_player_res;
 
 typedef struct s_mlx_resources
