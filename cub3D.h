@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 17:54:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/04 14:14:48 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ typedef struct s_map_resources
 	t_bool			ceiling_is_set;
 	t_bool			floor_is_set;
 	int				first_line_of_map;
-	int				nbr_of_rows;
+	int				nbr_of_rows; // If used again after parsing, update this variable when freeing the trailing empty rows
+	size_t			size_of_longest_row;
 	char			**map;
 }	t_map_res;
 
@@ -104,7 +105,6 @@ void	parse_map(t_map_res *map_res, t_player_res *player);
 // parsing/utils.c
 t_bool	file_extension_check(char *file);
 void	ignore_leading_white_space(char **line);
-t_bool	line_is_not_empty(char *line);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

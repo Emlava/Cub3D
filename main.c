@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 11:53:09 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/04 14:04:54 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_map_res(t_map_res *map_res)
 	map_res->floor_is_set = FALSE;
 	map_res->map = NULL;
 	map_res->nbr_of_rows = 0;
+	map_res->size_of_longest_row = 0;
 	return ;
 }
 
@@ -35,6 +36,15 @@ int	main(int ac, char *av[])
 	init_map_res(&map_res);
 	// Store the contents of the given file in the map struct while parsing
 	process_file(ac, av, &map_res, &player);
+
+	//
+	int	i = 0;
+	while (map_res.map[i] && map_res.map[i][0])
+	{
+		ft_printf("%s\n", map_res.map[i]);
+		i++;
+	}
+	//
 
 	// mlx_res.mlx_id = mlx_init();
 	// if (!mlx_res.mlx_id)

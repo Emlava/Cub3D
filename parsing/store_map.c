@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:40:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 10:40:17 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/04 13:40:00 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,48 @@ static int	allocate_buff_node(t_map_buff **node, t_map_res *map_res, char *line,
 		ft_dprintf(2, "malloc() failure\n");
 		return (-1);
 	}
+	(*node)->row = NULL;
 	(*node)->next = NULL;
 	return (0);
 }
 
 static void	store_and_update_line(t_map_buff *node, t_map_res *map_res, char **line, int fd)
 {
+	size_t	row_len;
+
 	node->row = *line;
 	map_res->nbr_of_rows++;
+	row_len = ft_strlen(node->row);
+	if (row_len > map_res->size_of_longest_row)
+		map_res->size_of_longest_row = row_len;
 	*line = get_next_line(fd);
 	return ;
 }
 
-static void	check_file_after_map(char *line, int fd, t_map_buff *map_buff, t_map_res *map_res)
+static void	manage_malloc_failure(t_map_res *map_res, t_map_buff *map_buff)
 {
-	while (line) // If we enter this loop, the current line is empty
+	free_map_buff(map_buff);
+	free_map_res(map_res);
+	ft_dprintf(2, "malloc() failure\n");
+	exit(EXIT_FAILURE);
+}
+
+static void	copy_and_space_pad_row(t_map_buff *map_buff, t_map_res *map_res, int i)
+{
+	int	j;
+
+	j = 0;
+	while (map_buff->row[j] && map_buff->row[j] != '\n')
 	{
-		free(line);
-		line = get_next_line(fd);
-		if (line_is_not_empty(line))
-		{
-			free(line);
-			free_map_buff(map_buff);
-			free_map_res(map_res);
-			close(fd);
-			ft_dprintf(2, "Error\nSomething was found after the map\n");
-			exit(EXIT_FAILURE);
-		}
+		map_res->map[i][j] = map_buff->row[j];
+		j++;
 	}
-	return ;
+	while (j < (int)map_res->size_of_longest_row - 1)
+	{
+		map_res->map[i][j] = ' ';
+		j++;
+	}
+	map_res->map[i][j] = '\0';
 }
 
 static void	copy_map_from_buff(t_map_res *map_res, t_map_buff *map_buff)
@@ -60,16 +73,15 @@ static void	copy_map_from_buff(t_map_res *map_res, t_map_buff *map_buff)
 
 	map_res->map = malloc(sizeof(char*) * (map_res->nbr_of_rows + 1));
 	if (!map_res->map)
-	{
-		free_map_buff(map_buff);
-		free_map_res(map_res);
-		ft_dprintf(2, "malloc() failure\n");
-		exit(EXIT_FAILURE);
-	}
+		manage_malloc_failure(map_res, map_buff);
 	i = 0;
 	while (i < map_res->nbr_of_rows)
 	{
-		map_res->map[i] = map_buff->row;
+		// + 1 is not needed when allocating because we replace '\n' with '\0'
+		map_res->map[i] = malloc(sizeof(char) * (map_res->size_of_longest_row));
+		if (!map_res->map[i])
+			manage_malloc_failure(map_res, map_buff);
+		copy_and_space_pad_row(map_buff, map_res, i);
 		i++;
 		map_buff = map_buff->next;	
 	}
@@ -86,7 +98,7 @@ void	store_map(char *line, t_map_res *map_res, int fd)
 		exit(EXIT_FAILURE);
 	store_and_update_line(map_buff, map_res, &line, fd);
 	curr_node = map_buff;
-	while (line && line_is_not_empty(line))
+	while (line)
 	{
 		if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
 		{
@@ -96,7 +108,6 @@ void	store_map(char *line, t_map_res *map_res, int fd)
 		curr_node = curr_node->next;
 		store_and_update_line(curr_node, map_res, &line, fd);
 	}
-	check_file_after_map(line, fd, map_buff, map_res);
 	close(fd);
 	copy_map_from_buff(map_res, map_buff);
 	free_map_buff(map_buff);

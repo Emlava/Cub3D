@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 11:23:12 by elara-va          #+#    #+#             */
-/*   Updated: 2026/09/29 20:36:43 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/04 13:39:11 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	free_map_buff(t_map_buff *map_buff)
 
 	while (map_buff != NULL)
 	{
+		if (map_buff->row != NULL)
+			free(map_buff->row);
 		tmp = map_buff;
 		map_buff = map_buff->next;
 		free(tmp);
