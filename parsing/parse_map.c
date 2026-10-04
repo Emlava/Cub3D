@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 14:29:30 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/04 15:41:20 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ static t_bool	orthogonal_space(char **map, int x, int y)
 	above = map[y - 1][x];
 	below = map[y + 1][x];
 	if (left == ' ' || right == ' ' || above == ' ' || below == ' ')
-	{
-		// ft_printf("left: %c, right: %c, above: %c, below: %c\n", left, right, above, below);
 		return (TRUE);
-	}
 	return (FALSE);
 }
 
