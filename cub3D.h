@@ -25,7 +25,6 @@
 # include <math.h>
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
-# include "minilibx-linux/mlx_int.h"
 
 # define FALSE 0
 # define TRUE 1
