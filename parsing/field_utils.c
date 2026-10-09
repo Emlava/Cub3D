@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fields_utils.c                                     :+:      :+:    :+:   */
+/*   field_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/01 12:35:19 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 09:38:10 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+/*
+-If malloc() fails here, we absolutely say it and exit
+-Same thing if there is more than one word given after the direction identifier
+-Open the path given, using perror() and exiting if not possible
+*/
 
 int	get_north_texture(char *line, t_map_res *map_res)
 {
