@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 13:54:17 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 09:20:15 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
 				*line_count);
 			free(*line);
-			close(fd);
+			free_map_res(map_res);
 			exit(EXIT_FAILURE);
 		}
 		free(*line);
@@ -85,7 +85,6 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 	{
 		ft_dprintf(2, "Error\nMissing texture or color\n");
 		free(*line);
-		close(fd);
 		free_map_res(map_res);
 		exit(EXIT_FAILURE);
 	}

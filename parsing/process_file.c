@@ -6,9 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/02 11:05:31 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 09:21:41 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../cub3D.h"
 
 /*
 	Things the program should be able to catch so far:
@@ -16,10 +18,10 @@
 	-Invalid fields
 	-Repeated fields
 	-Missing map
-	-Content after map
+	-Invalid characters in map
+	-Missing player in map
 */
 
-#include "../cub3D.h"
 
 static void	store_file_info(int fd, t_map_res *map_res, t_player_res *player)
 {
@@ -32,7 +34,6 @@ static void	store_file_info(int fd, t_map_res *map_res, t_player_res *player)
 	if (!line)
 	{
 		free_map_res(map_res);
-		close(fd);
 		ft_dprintf(2, "Error\nMissing map\n");
 		exit(EXIT_FAILURE);
 	}
