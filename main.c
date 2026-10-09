@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 14:04:54 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 18:01:02 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int ac, char *av[])
 	init_map_res(&map_res);
 	// Store the contents of the given file in the map struct while parsing
 	process_file(ac, av, &map_res, &player);
+
+	// Determine when to open the files with the textures
 
 	//
 	int	i = 0;

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:42:54 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 14:11:31 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 17:14:01 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ t_bool	file_extension_check(char *file)
 	return (1);
 }
 
-// Only use when another reference to the original string is available
-// if needed to free. It does not ignore a '\n'
-void	ignore_leading_white_space(char **line)
+// If freeing line is necessary, use only when another reference to the
+// original string is available. It does not ignore a '\n'
+void	ignore_white_space(char **line)
 {
 	while (**line != '\n' && ft_isspace(**line))
 		(*line)++;

@@ -1,8 +1,8 @@
-NO 	 	 	 		./path
+NO    	 ./path
 SO  	./path/south
 WE ./path
 EA ./path
-C 220,100,0
+C 220,255,0
 F 220,100,0
 
 

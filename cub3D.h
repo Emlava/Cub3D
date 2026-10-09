@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 14:14:48 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 17:14:01 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define PLAYERS_HEIGHT 32
 # define WORLDS_SIDE_LENGTH 64
 # define FOV 60
+# define MALLOC_FAILURE -2
 
 // Things to free/close/destroy
 // -mlx_id
@@ -89,10 +90,8 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 			int *line_count, int fd);
 
 // parsing/field_utils.c
-int	get_north_texture(char *line, t_map_res *map_res);
-int	get_south_texture(char *line, t_map_res *map_res);
-int	get_east_texture(char *line, t_map_res *map_res);
-int	get_west_texture(char *line, t_map_res *map_res);
+int	get_meridian_texture(char *line, t_map_res *map_res, char *direction);
+int	get_parallel_texture(char *line, t_map_res *map_res, char *direction);
 int	get_color(char *line, t_map_res *map_res, char c);
 
 // parsing/store_map.c
@@ -103,7 +102,7 @@ void	parse_map(t_map_res *map_res, t_player_res *player);
 
 // parsing/utils.c
 t_bool	file_extension_check(char *file);
-void	ignore_leading_white_space(char **line);
+void	ignore_white_space(char **line);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

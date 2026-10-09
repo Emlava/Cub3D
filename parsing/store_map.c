@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:40:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/04 13:40:00 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 16:13:08 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	allocate_buff_node(t_map_buff **node, t_map_res *map_res, char *line,
 		free(line);
 		close (fd);
 		ft_dprintf(2, "malloc() failure\n");
-		return (-1);
+		return (MALLOC_FAILURE);
 	}
 	(*node)->row = NULL;
 	(*node)->next = NULL;
@@ -94,13 +94,13 @@ void	store_map(char *line, t_map_res *map_res, int fd)
 	t_map_buff	*map_buff;
 	t_map_buff	*curr_node;
 
-	if (allocate_buff_node(&map_buff, map_res, line, fd) == -1)
+	if (allocate_buff_node(&map_buff, map_res, line, fd) == MALLOC_FAILURE)
 		exit(EXIT_FAILURE);
 	store_and_update_line(map_buff, map_res, &line, fd);
 	curr_node = map_buff;
 	while (line)
 	{
-		if (allocate_buff_node(&curr_node->next, map_res, line, fd) == -1)
+		if (allocate_buff_node(&curr_node->next, map_res, line, fd) == MALLOC_FAILURE)
 		{
 			free_map_buff(map_buff);
 			exit(EXIT_FAILURE);

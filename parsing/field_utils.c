@@ -6,73 +6,90 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 09:38:10 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 17:58:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-/*
--If malloc() fails here, we absolutely say it and exit
--Same thing if there is more than one word given after the direction identifier
--Open the path given, using perror() and exiting if not possible
-*/
-
-int	get_north_texture(char *line, t_map_res *map_res)
+static t_bool	empty_spaces_in_path(char *path)
 {
-	ignore_leading_white_space(&line);
-	if (*line == '\n' || map_res->north != NULL)
+	while (*path && !ft_isspace(*path))
+		path++;
+	ignore_white_space(&path);
+	if (*path && *path != '\n')
+		return (TRUE);
+	return (FALSE);
+}
+
+int	get_meridian_texture(char *line, t_map_res *map_res, char *direction)
+{
+	ignore_white_space(&line);
+	if (*line == '\n' || empty_spaces_in_path(line))
 		return (-1);
-	map_res->north = ft_strdup(line); // If malloc() fails here, the program will exit when checking for missing fields
+	if (ft_strncmp(direction, "NO", 2) == 0)
+	{
+		map_res->north = ft_strdup(line);
+		if (!map_res->north)
+			return (MALLOC_FAILURE);
+	}
+	else if (ft_strncmp(direction, "SO", 2) == 0)
+	{
+		map_res->south = ft_strdup(line);
+		if (!map_res->south)
+			return (MALLOC_FAILURE);
+	}
 	return (0);
 }
 
-int	get_south_texture(char *line, t_map_res *map_res)
+int	get_parallel_texture(char *line, t_map_res *map_res, char *direction)
 {
-	ignore_leading_white_space(&line);
-	if (*line == '\n' || map_res->south != NULL)
+	ignore_white_space(&line);
+	if (*line == '\n' || empty_spaces_in_path(line))
 		return (-1);
-	map_res->south = ft_strdup(line); // If malloc() fails here, the program will exit when checking for missing fields
+	if (ft_strncmp(direction, "WE", 2) == 0)
+	{
+		map_res->west = ft_strdup(line);
+		if (!map_res->west)
+			return (MALLOC_FAILURE);
+	}
+	else if (ft_strncmp(direction, "EA", 2) == 0)
+	{
+		map_res->east = ft_strdup(line);
+		if (!map_res->east)
+			return (MALLOC_FAILURE);
+	}
 	return (0);
 }
 
-int	get_east_texture(char *line, t_map_res *map_res)
+static void	go_to_next_color(char **line)
 {
-	ignore_leading_white_space(&line);
-	if (!(*line) || map_res->east != NULL)
-		return (-1);
-	map_res->east = ft_strdup(line); // If malloc() fails here, the program will exit when checking for missing fields
-	return (0);
-}
-
-int	get_west_texture(char *line, t_map_res *map_res)
-{
-	ignore_leading_white_space(&line);
-	if (*line == '\n' || map_res->west != NULL)
-		return (-1);
-	map_res->west = ft_strdup(line); // If malloc() fails here, the program will exit when checking for missing fields
-	return (0);
+	while (ft_isdigit(**line))
+		(*line)++;
+	if (**line == ',' && *(*line + 1) != '\n')
+		(*line)++;
+	ignore_white_space(line);
 }
 
 int	get_color(char *line, t_map_res *map_res, char c)
 {
 	int	i;
+	int	color;
 
 	i = 0;
-	ignore_leading_white_space(&line);
+	ignore_white_space(&line);
 	while (*line != '\n')
 	{
 		if (i > 2 || !ft_isdigit(*line))
 			return (-1);
+		color = ft_atoi(line);
+		if (color > 255)
+			return (-1);
 		if (c == 'C')
-			map_res->ceiling[i++] = ft_atoi(line);
+			map_res->ceiling[i++] = color;
 		else if (c == 'F')
-			map_res->floor[i++] = ft_atoi(line);
-		while (ft_isdigit(*line))
-			line++;
-		if (*line == ',' && *(line + 1) != '\n')
-			line++;
-		ignore_leading_white_space(&line);
+			map_res->floor[i++] = color;
+		go_to_next_color(&line);
 	}
 	if (i < 3)
 		return (-1);

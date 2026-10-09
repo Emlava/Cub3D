@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 09:20:15 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/09 17:23:48 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,21 @@ static t_bool	line_is_not_map(char *line)
 
 static int	store_field(char *line, t_map_res *map_res)
 {
-	ignore_leading_white_space(&line);
+	ignore_white_space(&line);
 	if (*line == '\n')
 		return (0);
-	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2]))
-		return (get_north_texture(line + 3, map_res));
-	else if (ft_strncmp(line, "SO", 2) == 0 && ft_isspace(line[2]))
-		return (get_south_texture(line + 3, map_res));
-	else if (ft_strncmp(line, "EA", 2) == 0 && ft_isspace(line[2]))
-		return (get_east_texture(line + 3, map_res));
-	else if (ft_strncmp(line, "WE", 2) == 0 && ft_isspace(line[2]))
-		return (get_west_texture(line + 3, map_res));
+	if (ft_strncmp(line, "NO", 2) == 0 && ft_isspace(line[2])
+		&& map_res->north == NULL)
+		return (get_meridian_texture(line + 3, map_res, "NO"));
+	else if (ft_strncmp(line, "SO", 2) == 0 && ft_isspace(line[2])
+		&& map_res->south == NULL)
+		return (get_meridian_texture(line + 3, map_res, "SO"));
+	else if (ft_strncmp(line, "WE", 2) == 0 && ft_isspace(line[2])
+		&& map_res->west == NULL)
+		return (get_parallel_texture(line + 3, map_res, "WE"));
+	else if (ft_strncmp(line, "EA", 2) == 0 && ft_isspace(line[2])
+		&& map_res->east == NULL)
+		return (get_parallel_texture(line + 3, map_res, "EA"));
 	else if (line[0] == 'C' && ft_isspace(line[1])
 		&& map_res->ceiling_is_set == FALSE)
 		return (get_color(line + 2, map_res, 'C'));
@@ -56,37 +60,44 @@ static int	store_field(char *line, t_map_res *map_res)
 		return (-1);
 }
 
-static t_bool	missing_field(t_map_res *map_res)
+static void	check_for_missing_fields(t_map_res *map_res, char *line)
 {
 	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
 		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
-		return (TRUE);
-	return (FALSE);
+	{
+		ft_dprintf(2, "Error\nMissing texture or color\n");
+		free(line);
+		free_map_res(map_res);
+		exit(EXIT_FAILURE);
+	}
+	return ;
 }
 
 void	store_textures_and_colors(char **line, t_map_res *map_res,
 	int *line_count, int fd)
 {
+	int	ret_value;
+
 	while (*line && line_is_not_map(*line))
 	{
-		if (store_field(*line, map_res) == -1)
+		ret_value = store_field(*line, map_res);
 		{
-			ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
-				*line_count);
-			free(*line);
-			free_map_res(map_res);
-			exit(EXIT_FAILURE);
+			if (ret_value < 0)
+			{
+				if (ret_value == MALLOC_FAILURE)
+					ft_dprintf(2, "malloc() failure\n");
+				else
+					ft_dprintf(2, "Error\nLine %d of the given file is invalid\n",
+						*line_count);
+				free(*line);
+				free_map_res(map_res);
+				exit(EXIT_FAILURE);
+			}
 		}
 		free(*line);
 		*line = get_next_line(fd);
 		(*line_count)++;
 	}
-	if (missing_field(map_res))
-	{
-		ft_dprintf(2, "Error\nMissing texture or color\n");
-		free(*line);
-		free_map_res(map_res);
-		exit(EXIT_FAILURE);
-	}
+	check_for_missing_fields(map_res, *line);
 	return ;
 }
