@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 17:14:01 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/10 21:57:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ typedef struct s_map_resources
 	char			*south;
 	char			*west;
 	char			*east;
-	int 			ceiling[3];
+	int				ceiling[3];
 	int				floor[3];
 	t_bool			ceiling_is_set;
 	t_bool			floor_is_set;
 	int				first_line_of_map;
-	int				nbr_of_rows; // If used again after parsing, update this variable when freeing the trailing empty rows
+	int				nbr_of_rows; // Empty lines
 	size_t			size_of_longest_row;
 	char			**map;
 }	t_map_res;
@@ -83,16 +83,17 @@ typedef struct s_mlx_resources
 }	t_mlx_res;
 
 // parsing/process_file.c
-void	process_file(int ac, char *av[], t_map_res *map_res, t_player_res *player);
+void	process_file(int ac, char *av[], t_map_res *map_res,
+			t_player_res *player);
 
 // parsing/store_textures_and_colors.c
 void	store_textures_and_colors(char **line, t_map_res *map_res,
 			int *line_count, int fd);
 
 // parsing/field_utils.c
-int	get_meridian_texture(char *line, t_map_res *map_res, char *direction);
-int	get_parallel_texture(char *line, t_map_res *map_res, char *direction);
-int	get_color(char *line, t_map_res *map_res, char c);
+int		get_meridian_texture(char *line, t_map_res *map_res, char *direction);
+int		get_parallel_texture(char *line, t_map_res *map_res, char *direction);
+int		get_color(char *line, t_map_res *map_res, char c);
 
 // parsing/store_map.c
 void	store_map(char *line, t_map_res *map_res, int fd);
@@ -103,6 +104,7 @@ void	parse_map(t_map_res *map_res, t_player_res *player);
 // parsing/utils.c
 t_bool	file_extension_check(char *file);
 void	ignore_white_space(char **line);
+void	manage_malloc_failure(t_map_res *map_res, t_map_buff *map_buff);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);

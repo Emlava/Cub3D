@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 17:57:29 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/10 21:45:22 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void	store_file_info(int fd, t_map_res *map_res, t_player_res *player)
 		ft_dprintf(2, "Error\nMissing map\n");
 		exit(EXIT_FAILURE);
 	}
-	// Check for permissions for textures
 	map_res->first_line_of_map = line_count;
 	store_map(line, map_res, fd);
 	parse_map(map_res, player);
 	return ;
 }
 
-void	process_file(int ac, char *av[], t_map_res *map_res, t_player_res *player)
+void	process_file(int ac, char *av[], t_map_res *map_res,
+	t_player_res *player)
 {
 	int	fd;
 

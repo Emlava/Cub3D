@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:42:54 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 17:14:01 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/10 21:57:45 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ void	ignore_white_space(char **line)
 	while (**line != '\n' && ft_isspace(**line))
 		(*line)++;
 	return ;
+}
+
+void	manage_malloc_failure(t_map_res *map_res, t_map_buff *map_buff)
+{
+	free_map_buff(map_buff);
+	free_map_res(map_res);
+	ft_dprintf(2, "malloc() failure\n");
+	exit(EXIT_FAILURE);
 }

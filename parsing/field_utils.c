@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/09 17:58:56 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/10 21:48:02 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int	get_color(char *line, t_map_res *map_res, char c)
 	if (i < 3)
 		return (-1);
 	if (c == 'C')
-			map_res->ceiling_is_set = TRUE;
+		map_res->ceiling_is_set = TRUE;
 	else if (c == 'F')
-			map_res->floor_is_set = TRUE;
+		map_res->floor_is_set = TRUE;
 	return (0);
 }
