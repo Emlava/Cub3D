@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/10 21:45:22 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/12 18:42:39 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@
 	-Invalid characters in map
 	-Missing player in map
 */
+
+static t_bool	file_extension_check(char *file)
+{
+	size_t	file_name_len;
+	char	*extension;
+
+	file_name_len = ft_strlen(file);
+	if (file_name_len < 5)
+		return (0);
+	extension = ft_strnstr(file, ".cub", file_name_len);
+	if (!extension || *(extension + 4) != '\0')
+		return (0);
+	return (1);
+}
 
 static void	store_file_info(int fd, t_map_res *map_res, t_player_res *player)
 {

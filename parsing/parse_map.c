@@ -6,27 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/10 22:02:01 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/12 19:50:30 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-static t_bool	orthogonal_space(char **map, int x, int y)
-{
-	char	left;
-	char	right;
-	char	above;
-	char	below;
-
-	left = map[y][x - 1];
-	right = map[y][x + 1];
-	above = map[y - 1][x];
-	below = map[y + 1][x];
-	if (left == ' ' || right == ' ' || above == ' ' || below == ' ')
-		return (TRUE);
-	return (FALSE);
-}
 
 // If the 0 is at the first or last columns
 // If the 0 is at the last row (first is already covered when
@@ -70,26 +54,6 @@ static void	set_viewing_angle(char value, t_player_res *player)
 	return ;
 }
 
-static t_bool	row_is_empty(char *line)
-{
-	while (*line == ' ')
-		line++;
-	if (*line)
-		return (FALSE);
-	return (TRUE);
-}
-
-static void	remove_trailing_empty_rows(char **map, int y)
-{
-	while (row_is_empty(map[y]))
-	{
-		free(map[y]);
-		map[y] = NULL;
-		y--;
-	}
-	return ;
-}
-
 void	parse_map(t_map_res *map_res, t_player_res *player)
 {
 	int		curr_line;
@@ -103,6 +67,7 @@ void	parse_map(t_map_res *map_res, t_player_res *player)
 	while (map_res->map[y])
 	{
 		x = 0;
+		// Extract this inner loop and make it a function
 		while (map_res->map[y][x])
 		{
 			value = map_res->map[y][x];
@@ -128,12 +93,7 @@ void	parse_map(t_map_res *map_res, t_player_res *player)
 		y++;
 		curr_line++;
 	}
-	if (player->coords[X] == -1)
-	{
-		free_map_res(map_res);
-		ft_dprintf(2, "Error\nNo player found\n");
-		exit (EXIT_FAILURE);
-	}
-	remove_trailing_empty_rows(map_res->map, --y);
+	check_player_is_present(player->coords[X], map_res);
+	remove_trailing_empty_rows(map_res, --y);
 	return ;
 }

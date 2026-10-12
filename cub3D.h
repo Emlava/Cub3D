@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/10 21:57:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/12 19:30:53 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	process_file(int ac, char *av[], t_map_res *map_res,
 void	store_textures_and_colors(char **line, t_map_res *map_res,
 			int *line_count, int fd);
 
-// parsing/field_utils.c
+// parsing/get_fields.c
 int		get_meridian_texture(char *line, t_map_res *map_res, char *direction);
 int		get_parallel_texture(char *line, t_map_res *map_res, char *direction);
 int		get_color(char *line, t_map_res *map_res, char c);
@@ -101,10 +101,16 @@ void	store_map(char *line, t_map_res *map_res, int fd);
 // parsing/parse_map.c
 void	parse_map(t_map_res *map_res, t_player_res *player);
 
-// parsing/utils.c
-t_bool	file_extension_check(char *file);
-void	ignore_white_space(char **line);
+// parsing/map_utils.c
 void	manage_malloc_failure(t_map_res *map_res, t_map_buff *map_buff);
+t_bool	orthogonal_space(char **map, int x, int y);
+t_bool	row_is_empty(char *line);
+void	check_player_is_present(int player_coord_x, t_map_res *map_res);
+void	remove_trailing_empty_rows(t_map_res *map_res, int y);
+
+// parsing/field_utils.c
+t_bool	line_is_not_map(char *line);
+void	ignore_white_space(char **line);
 
 // cleaning.c
 void	free_map_res(t_map_res *map_res);
