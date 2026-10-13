@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 12:43:37 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/12 18:42:39 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/13 20:14:41 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 	-Missing map
 	-Invalid characters in map
 	-Missing player in map
+	-More than one player
 */
 
 static t_bool	file_extension_check(char *file)

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/12 19:30:53 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/13 18:51:49 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_map_resources
 	t_bool			ceiling_is_set;
 	t_bool			floor_is_set;
 	int				first_line_of_map;
-	int				nbr_of_rows; // Empty lines
+	int				nbr_of_rows;
 	size_t			size_of_longest_row;
 	char			**map;
 }	t_map_res;

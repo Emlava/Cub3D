@@ -6,11 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/12 18:50:20 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/12 18:55:43 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/13 19:30:24 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../cub3D.h"
 
 static t_bool	is_map_char(char c)
 {

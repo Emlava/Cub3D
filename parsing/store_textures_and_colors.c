@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/12 18:51:29 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/13 20:16:59 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 				if (ret_value == MALLOC_FAILURE)
 					ft_dprintf(2, "malloc() failure\n");
 				else
-					ft_dprintf(2, "Error\nLine %d of the given file is"
+					ft_dprintf(2, "Error\nLine %d of the given file is "
 						"invalid\n", *line_count);
 				free(*line);
 				free_map_res(map_res);
