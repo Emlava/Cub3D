@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/13 20:16:59 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/23 13:23:20 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void	check_for_missing_fields(t_map_res *map_res, char *line)
 	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
 		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
 	{
-		ft_dprintf(2, "Error\nMissing texture or color\n");
+		ft_dprintf(2, "Error\nLine of map found before all texture or "
+			"color fields were entered\n");
 		free(line);
 		free_map_res(map_res);
 		exit(EXIT_FAILURE);
