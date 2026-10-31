@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/12 18:38:07 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/12 19:30:26 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/31 12:14:46 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_bool	orthogonal_space(char **map, int x, int y)
 
 t_bool	row_is_empty(char *line)
 {
-	while (*line == ' ')
+	while (*line == ' ' || *line == '\n')
 		line++;
 	if (*line)
 		return (FALSE);

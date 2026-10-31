@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/13 19:24:30 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/10/31 12:41:43 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,27 @@ static void	parse_row(t_map_res *map_res, int row, int curr_file_line,
 	}
 }
 
+static void	check_for_content_after_map(t_map_res *map_res, int *curr_row,
+	int curr_file_line)
+{
+	(*curr_row)++;
+	curr_file_line++;
+	while (map_res->map[(*curr_row)])
+	{
+		if (!row_is_empty(map_res->map[*curr_row]))
+		{
+			free_map_res(map_res);
+			ft_dprintf(2, "Error\nLine %d is not empty."
+				" Once an empty line is found after the map,"
+				" there can be no more non-empty lines\n", curr_file_line);
+			exit (EXIT_FAILURE);
+		}
+		(*curr_row)++;
+		curr_file_line++;
+	}
+	return ;
+}
+
 void	parse_map(t_map_res *map_res, t_player_res *player)
 {
 	int		curr_file_line;
@@ -89,12 +110,15 @@ void	parse_map(t_map_res *map_res, t_player_res *player)
 	curr_file_line = map_res->first_line_of_map;
 	curr_row = 0;
 	player->coords[X] = -1;
-	while (map_res->map[curr_row])
+	while (map_res->map[curr_row]
+		&& !row_is_empty(map_res->map[curr_row]))
 	{
 		parse_row(map_res, curr_row, curr_file_line, player);
 		curr_row++;
 		curr_file_line++;
 	}
+	if (map_res->map[curr_row])
+		check_for_content_after_map(map_res, &curr_row, curr_file_line);
 	check_player_is_present(player->coords[X], map_res);
 	remove_trailing_empty_rows(map_res, --curr_row);
 	return ;
