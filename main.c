@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/30 17:44:19 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/01 15:08:55 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,31 @@ void	init_map_res(t_map_res *map_res)
 	return ;
 }
 
+// The distance to the projection plane is the adjacent side of the right triangle
+// resulting from cutting in half the triangle formed by the player and both ends
+// of the projection plane, considering the angle on the player's side as theta.
+// The formula to get the size of the adjacent side of a right triangle is
+// opposite / tan(θ)
+// Consider that the oppposite side is half of the projection plane's width,
+// and theta is half of the FOV
+unsigned int	get_distance_to_proj_plane(int width_of_plane)
+{
+	int		opposite;
+	double	theta_in_rad;
+	double	tan_of_theta;
+	
+	opposite = width_of_plane / 2;
+	theta_in_rad = (FOV / 2) * (PI / 180);
+	tan_of_theta = tan(theta_in_rad);
+	
+	return ((unsigned int)(opposite / tan_of_theta));
+}
+
 int	main(int ac, char *av[])
 {
 	t_map_res		map_res;
 	t_player_res	player;
-	t_mlx_res	mlx_res;
+	t_mlx_res		mlx_res;
 
 	init_map_res(&map_res);
 	// Store the contents of the given file in the map struct while parsing
@@ -45,13 +65,19 @@ int	main(int ac, char *av[])
 		ft_printf("%s\n", map_res.map[i]);
 		i++;
 	}
-	sleep(3);
 	//
 
 	mlx_res.mlx_id = mlx_init();
 	if (!mlx_res.mlx_id)
 		exit(EXIT_FAILURE);
 	mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.screen_size[X], &mlx_res.screen_size[Y]);
+	player.d_to_proj_plane
+		= get_distance_to_proj_plane(mlx_res.screen_size[X]);
+	
+	//
+	printf("Distance from player to projection plane: %d\n", player.d_to_proj_plane);
+	sleep(5);
+	//
 	
 	// Create first image using the given map's starting position
 	

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/13 18:51:49 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/01 14:59:53 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define TRUE 1
 # define X 0
 # define Y 1
+# define PI 3.14159
 # define PLAYERS_HEIGHT 32
 # define WORLDS_SIDE_LENGTH 64
 # define FOV 60
@@ -70,8 +71,9 @@ typedef struct s_map_buff
 
 typedef struct s_player_resources
 {
-	int	coords[2];
-	int	viewing_angle;
+	int				coords[2];
+	unsigned int	viewing_angle;
+	unsigned int	d_to_proj_plane;
 }	t_player_res;
 
 typedef struct s_mlx_resources
