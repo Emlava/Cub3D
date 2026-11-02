@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/01 15:13:51 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/02 18:16:19 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define PLAYERS_HEIGHT 32
 # define WORLDS_SIDE_LENGTH 64
 # define FOV 60
-// The angle between subsequent rays is equal to FOV / plane's width
 # define MALLOC_FAILURE -2
 
 // Things to free/close/destroy
@@ -75,6 +74,7 @@ typedef struct s_player_resources
 	int				coords[2];
 	unsigned int	viewing_angle;
 	unsigned int	d_to_proj_plane;
+	double			angle_between_rays;
 }	t_player_res;
 
 typedef struct s_mlx_resources

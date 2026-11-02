@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/23 13:23:20 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/02 20:57:55 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	store_field(char *line, t_map_res *map_res)
 		return (-1);
 }
 
-static void	check_for_missing_fields(t_map_res *map_res, char *line)
+static void	check_for_missing_fields(char *line, t_map_res *map_res)
 {
 	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
 		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
@@ -49,6 +49,34 @@ static void	check_for_missing_fields(t_map_res *map_res, char *line)
 		free(line);
 		free_map_res(map_res);
 		exit(EXIT_FAILURE);
+	}
+	return ;
+}
+
+static void	check_for_invalid_texture_path(char *line, t_map_res *map_res)
+{
+	char	*paths[4];
+	int		fd;
+	int		i;
+
+	paths[0] = map_res->north;
+	paths[1] = map_res->south;
+	paths[2] = map_res->west;
+	paths[3] = map_res->east;
+	i = 0;
+	while (i < 4)
+	{
+		fd = open(paths[i], O_RDONLY);
+		if (fd == -1)
+		{
+			ft_dprintf(2, "Error\n");
+			perror(paths[i]);
+			free(line);
+			free_map_res(map_res);
+			exit(EXIT_FAILURE);
+		}
+		close(fd);
+		i++;
 	}
 	return ;
 }
@@ -78,6 +106,7 @@ void	store_textures_and_colors(char **line, t_map_res *map_res,
 		*line = get_next_line(fd);
 		(*line_count)++;
 	}
-	check_for_missing_fields(map_res, *line);
+	check_for_missing_fields(*line, map_res);
+	check_for_invalid_texture_path(*line, map_res);
 	return ;
 }

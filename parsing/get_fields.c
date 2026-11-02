@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   field_utils.c                                      :+:      :+:    :+:   */
+/*   get_fields.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/10 21:48:02 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/02 20:51:47 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ int	get_meridian_texture(char *line, t_map_res *map_res, char *direction)
 		map_res->north = ft_strdup(line);
 		if (!map_res->north)
 			return (MALLOC_FAILURE);
+		map_res->north[ft_strlen(map_res->north) - 1] = '\0';
 	}
 	else if (ft_strncmp(direction, "SO", 2) == 0)
 	{
 		map_res->south = ft_strdup(line);
 		if (!map_res->south)
 			return (MALLOC_FAILURE);
+		map_res->south[ft_strlen(map_res->south) - 1] = '\0';
 	}
 	return (0);
 }
@@ -52,12 +54,14 @@ int	get_parallel_texture(char *line, t_map_res *map_res, char *direction)
 		map_res->west = ft_strdup(line);
 		if (!map_res->west)
 			return (MALLOC_FAILURE);
+		map_res->west[ft_strlen(map_res->west) - 1] = '\0';
 	}
 	else if (ft_strncmp(direction, "EA", 2) == 0)
 	{
 		map_res->east = ft_strdup(line);
 		if (!map_res->east)
 			return (MALLOC_FAILURE);
+		map_res->east[ft_strlen(map_res->east) - 1] = '\0';
 	}
 	return (0);
 }

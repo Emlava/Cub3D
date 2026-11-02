@@ -1,7 +1,7 @@
-NO    	 ./path
-SO  	./path/south
-WE ./path
-EA ./path
+NO    	 ./textures/north.txt
+SO  	./textures/south.txt
+WE ./textures/west.txt
+EA ./textures/east.txt
 C 200,255,1
 F 220,100,0
 

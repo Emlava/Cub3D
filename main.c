@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/01 15:08:55 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/02 20:59:07 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	init_map_res(t_map_res *map_res)
 // opposite / tan(θ)
 // Consider that the oppposite side is half of the projection plane's width,
 // and theta is half of the FOV
-unsigned int	get_distance_to_proj_plane(int width_of_plane)
+// The angle between subsequent rays is equal to FOV / plane's width
+void	get_player_info(t_player_res *player, int width_of_plane)
 {
 	int		opposite;
 	double	theta_in_rad;
@@ -42,8 +43,8 @@ unsigned int	get_distance_to_proj_plane(int width_of_plane)
 	opposite = width_of_plane / 2;
 	theta_in_rad = (FOV / 2) * (PI / 180);
 	tan_of_theta = tan(theta_in_rad);
-	
-	return ((unsigned int)(opposite / tan_of_theta));
+	player->d_to_proj_plane = (unsigned int)(opposite / tan_of_theta);
+	player->angle_between_rays = (double)FOV / width_of_plane;
 }
 
 int	main(int ac, char *av[])
@@ -56,28 +57,11 @@ int	main(int ac, char *av[])
 	// Store the contents of the given file in the map struct while parsing
 	process_file(ac, av, &map_res, &player);
 
-	// Determine when to open the files with the textures
-
-	//
-	int	i = 0;
-	while (map_res.map[i] && map_res.map[i][0])
-	{
-		ft_printf("%s\n", map_res.map[i]);
-		i++;
-	}
-	//
-
 	mlx_res.mlx_id = mlx_init();
 	if (!mlx_res.mlx_id)
 		exit(EXIT_FAILURE);
 	mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.screen_size[X], &mlx_res.screen_size[Y]);
-	player.d_to_proj_plane
-		= get_distance_to_proj_plane(mlx_res.screen_size[X]);
-	
-	//
-	printf("Distance from player to projection plane: %d\n", player.d_to_proj_plane);
-	sleep(5);
-	//
+	get_player_info(&player, mlx_res.screen_size[X]);
 	
 	// Create first image using the given map's starting position
 	
