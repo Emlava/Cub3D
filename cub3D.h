@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/02 18:16:19 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/06 14:55:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 // -mlx_id
 // -win;
 // -img
-// -Everything from map_res;
+// -Everything from map_res
 // -fd
 // -line
 // -map_buff nodes (not the row variables)
@@ -115,8 +115,12 @@ void	remove_trailing_empty_rows(t_map_res *map_res, int y);
 t_bool	line_is_not_map(char *line);
 void	ignore_white_space(char **line);
 
-// cleaning.c
+// parsing/cleaning.c
 void	free_map_res(t_map_res *map_res);
 void	free_map_buff(t_map_buff *map_buff);
+
+// rendering/cleaning.c
+void	destroy_mlx_res(t_mlx_res *mlx_res);
+void	clean_and_exit(t_mlx_res *mlx_res, t_map_res *map_res, int exit_status);
 
 #endif
