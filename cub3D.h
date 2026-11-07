@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/06 14:55:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/07 17:58:24 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define X 0
 # define Y 1
 # define PI 3.14159
-# define PLAYERS_HEIGHT 32
 # define WORLDS_SIDE_LENGTH 64
+# define PLAYERS_HEIGHT (WORLDS_SIDE_LENGTH / 2)
 # define FOV 60
 # define MALLOC_FAILURE -2
 
@@ -119,6 +119,13 @@ void	ignore_white_space(char **line);
 void	free_map_res(t_map_res *map_res);
 void	free_map_buff(t_map_buff *map_buff);
 
+// rendering/render_image.c
+void	render_image(t_player_res *player, t_mlx_res *mlx_res,
+	t_map_res *map_res);
+
+// rendering/cast_ray.c
+double	cast_ray(int player_coords[2], char **map, double ray_angle);
+	
 // rendering/cleaning.c
 void	destroy_mlx_res(t_mlx_res *mlx_res);
 void	clean_and_exit(t_mlx_res *mlx_res, t_map_res *map_res, int exit_status);

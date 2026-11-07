@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/06 15:34:00 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/07 14:02:37 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int ac, char *av[])
 		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
 	
 	// Render first image and place it in the window
+	render_image(&player, &mlx_res, &map_res);
 	// Set hooks so that the image is modified according to the events
 	
 	//
