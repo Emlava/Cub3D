@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/10/31 12:41:43 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/12 17:23:10 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	check_enclosure(t_map_res *map_res, int x, int y,
 static void	set_players_position(int x, int y, t_player_res *player,
 	char direction)
 {
-	player->coords[X] = (WORLDS_SIDE_LENGTH * x) + (WORLDS_SIDE_LENGTH / 2);
-	player->coords[Y] = (WORLDS_SIDE_LENGTH * y) + (WORLDS_SIDE_LENGTH / 2);
+	player->coords[X] = (WORLD_SIDE_LENGTH * x) + (WORLD_SIDE_LENGTH / 2);
+	player->coords[Y] = (WORLD_SIDE_LENGTH * y) + (WORLD_SIDE_LENGTH / 2);
 	if (direction == 'N')
 		player->viewing_angle = 90;
 	else if (direction == 'S')
