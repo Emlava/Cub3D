@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/12 17:33:34 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/13 14:17:04 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	check_horizontal_intersections(int player_coords[2],
 		return ;
 	}
 	
-	/* Find the nearest intersection coordinates */
+	// Find the nearest intersection coordinates
 	curr_intersection[Y] = (int)(player_coords[Y] / WORLD_SIDE_LENGTH)
 		* WORLD_SIDE_LENGTH;
 	if (ray_angle < 180) // Facing up
@@ -65,6 +65,9 @@ static void	check_horizontal_intersections(int player_coords[2],
 	+ round((player_coords[Y] - curr_intersection[Y]) / tan(ray_angle_in_rad));
 	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
 	grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	if (!is_inside_the_map(grid_x, grid_y, map_res, curr_intersection)
+		|| wall_check(grid_x, grid_y, map_res))
+		return ;
 
 	// Determine x_ and y_step and add them to curr_intersection
 	// while inside the map and no wall found
@@ -74,6 +77,10 @@ static void	check_horizontal_intersections(int player_coords[2],
 	y_step = WORLD_SIDE_LENGTH;
 	if (ray_angle < 180)
 		y_step = -y_step;
+	curr_intersection[X] += x_step;
+	curr_intersection[Y] += y_step;
+	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
+	grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
 	while (is_inside_the_map(grid_x, grid_y, map_res, curr_intersection)
 		&& !wall_check(grid_x, grid_y, map_res))
 	{
@@ -94,17 +101,38 @@ static void	check_vertical_intersections(int player_coords[2], t_map_res *map_re
 	int		x_step;
 	int		y_step;
 	
+	// Avoid a tan of 0, which would lead to a division by 0
 	if (ray_angle == 90 || ray_angle == 270)
 	{
 		curr_intersection[X] = INT_MAX;
 		curr_intersection[Y] = INT_MAX;
 		return ;
 	}
+
+	// Find the nearest intersection coordinates
+	curr_intersection[X] = (int)(player_coords[X] / WORLD_SIDE_LENGTH)
+		* WORLD_SIDE_LENGTH;
 	if (ray_angle < 90 || ray_angle > 270) // Facing right
-	{}
+		curr_intersection[X] += WORLD_SIDE_LENGTH;
 	else // Facing left
-	{}
+		curr_intersection[X] -= 1;
 	ray_angle_in_rad = ray_angle * (PI / 180);
+	curr_intersection[Y] = player_coords[Y]
+		+ round((player_coords[X] - curr_intersection[X]) * tan(ray_angle_in_rad));
+	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
+	grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	if (!is_inside_the_map(grid_x, grid_y, map_res, curr_intersection)
+		|| wall_check(grid_x, grid_y, map_res))
+		return ;
+	
+	// Determine x_ and y_step and add them to curr_intersection
+	// while inside the map and no wall found
+	x_step = WORLD_SIDE_LENGTH;
+	if (ray_angle > 90 && ray_angle < 270) // Facing left
+		x_step = -x_step;
+	y_step = WORLD_SIDE_LENGTH * tan(ray_angle_in_rad);
+	if (ray_angle < 180)
+		y_step = -y_step;
 }
 
 static double	d_from_player_to_wall(int player_coords[2], int wall_coords[2])
