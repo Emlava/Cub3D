@@ -6,7 +6,7 @@ LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
 OBJECTS = obj/main.o obj/parsing/process_file.o obj/parsing/store_textures_and_colors.o \
 obj/parsing/get_fields.o obj/parsing/field_utils.o obj/parsing/store_map.o obj/parsing/parse_map.o \
 obj/parsing/map_utils.o obj/parsing/cleaning.o obj/rendering/render_image.o obj/rendering/cast_ray.o \
-obj/rendering/cleaning.o
+obj/rendering/ray_utils.o obj/rendering/cleaning.o
 
 
 .PHONY: all clean fclean re

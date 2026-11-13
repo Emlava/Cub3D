@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/12 17:23:10 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/13 16:54:41 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,11 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 
 // rendering/cast_ray.c
 double	cast_ray(int player_coords[2], t_map_res *map_res, double ray_angle);
+
+// rendering/ray_utils.c
+t_bool	is_inside_the_map(int grid_x, int grid_y, t_map_res *map_res,
+	int intersection[2]);
+t_bool	wall_check(int grid_x, int grid_y, t_map_res *map_res);
 	
 // rendering/cleaning.c
 void	destroy_mlx_res(t_mlx_res *mlx_res);

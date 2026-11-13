@@ -6,33 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/13 14:26:46 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/13 17:15:50 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-static t_bool	is_inside_the_map(int grid_x, int grid_y, t_map_res *map_res,
-	int intersection[2])
-{
-	if (grid_y < 0 || grid_y >= map_res->nbr_of_rows || grid_x < 0
-		|| grid_x >= (int)map_res->size_of_longest_row
-		|| map_res->map[grid_y][grid_x] == ' ')
-	{
-		intersection[X] = INT_MAX;
-		intersection[Y] = INT_MAX;
-		return (FALSE);
-	}
-	return (TRUE);
-
-}
-
-static t_bool	wall_check(int grid_x, int grid_y, t_map_res *map_res)
-{
-	if (map_res->map[grid_y][grid_x] == '1')
-		return (TRUE);
-	return (FALSE);
-}
 
 // LEFT OFF HERE: Find a better structure for this function
 // and apply it to the next
@@ -53,6 +31,7 @@ static void	check_horizontal_intersections(int player_coords[2],
 		return ;
 	}
 	
+	// MAKE A FUNCTION OUT OF THIS
 	// Find the nearest intersection coordinates
 	curr_intersection[Y] = (int)(player_coords[Y] / WORLD_SIDE_LENGTH)
 		* WORLD_SIDE_LENGTH;
@@ -65,6 +44,10 @@ static void	check_horizontal_intersections(int player_coords[2],
 	+ round((player_coords[Y] - curr_intersection[Y]) / tan(ray_angle_in_rad));
 	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
 	grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+
+	// If the oposite condition is true
+	// (i. e., we are inside the map and the current intersection is not a wall),
+	// We'll call the next blocks, which will be made functions
 	if (!is_inside_the_map(grid_x, grid_y, map_res, curr_intersection)
 		|| wall_check(grid_x, grid_y, map_res))
 		return ;
@@ -77,6 +60,8 @@ static void	check_horizontal_intersections(int player_coords[2],
 	y_step = WORLD_SIDE_LENGTH;
 	if (ray_angle < 180)
 		y_step = -y_step;
+
+	// MAKE A FUNCTION OUT OF THIS TO USE WITH BOTH HORIZONTAL AND VERTICAL FUNCTIONS
 	curr_intersection[X] += x_step;
 	curr_intersection[Y] += y_step;
 	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
@@ -133,6 +118,19 @@ static void	check_vertical_intersections(int player_coords[2], t_map_res *map_re
 	y_step = WORLD_SIDE_LENGTH * tan(ray_angle_in_rad);
 	if (ray_angle < 180)
 		y_step = -y_step;
+	curr_intersection[X] += x_step;
+	curr_intersection[Y] += y_step;
+	grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
+	grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	while (is_inside_the_map(grid_x, grid_y, map_res, curr_intersection)
+		&& !wall_check(grid_x, grid_y, map_res))
+	{
+		curr_intersection[X] += x_step;
+		curr_intersection[Y] += y_step;
+		grid_x = curr_intersection[X] / WORLD_SIDE_LENGTH;
+		grid_y = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	}
+	return ;
 }
 
 static double	d_from_player_to_wall(int player_coords[2], int wall_coords[2])
