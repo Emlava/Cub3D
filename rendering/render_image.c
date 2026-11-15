@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/13 17:02:40 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 15:05:59 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 		ray_length = cast_ray(player->coords, map_res, ray_angle);
 		correct_fishbowl_effect(ray_length, ray_angle, player->viewing_angle);
 		
+		// LEFT OFF HERE
 		// draw column in image
 
 		ray_angle -= player->angle_between_rays;

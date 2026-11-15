@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 10:33:15 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/12 17:23:10 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 13:51:40 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	check_enclosure(t_map_res *map_res, int x, int y,
 
 	last_grid_of_row = ft_strlen(map_res->map[y]) - 1;
 	last_row = map_res->nbr_of_rows - 1;
-	if (x == 0 || x == last_grid_of_row || y == last_row
+	if (x == 0 || x == last_grid_of_row || y == 0 || y == last_row
 		|| orthogonal_space(map_res->map, x, y))
 	{
 		free_map_res(map_res);
