@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 15:01:12 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 16:44:43 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,22 @@ typedef struct s_player_resources
 	double			angle_between_rays;
 }	t_player_res;
 
+typedef struct s_img
+{
+	void	*id;
+	char	*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}	t_img;
+
 typedef struct s_mlx_resources
 {
 	void	*mlx_id;
 	int		screen_size[2];
 	void	*win;
-	void	*img;
+	t_img	img_1;
+	t_img	img_2;
 }	t_mlx_res;
 
 // parsing/process_file.c

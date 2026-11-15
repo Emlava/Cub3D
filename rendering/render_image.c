@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 15:05:59 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 16:45:28 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,21 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 	double	ray_angle;
 	int		column;
 	double	ray_length;
+	t_img	*img;
 
 	ray_angle = player->viewing_angle + (FOV / 2);
 	if (ray_angle < 0)
 		ray_angle += 360;
 	column = 0;
-	mlx_res->img = mlx_new_image(mlx_res->mlx_id,
+	// LEFT OFF HERE: Should it be img_1 or img_2
+	img = &mlx_res->img;
+	img->id = mlx_new_image(mlx_res->mlx_id,
 		mlx_res->screen_size[X], mlx_res->screen_size[Y]);
-	if (!mlx_res->img)
+	if (!img->id)
+		clean_and_exit(mlx_res, map_res, EXIT_FAILURE);
+	img->addr = mlx_get_data_addr(img->id, &img->bits_per_pixel, &img->size_line,
+		&img->endian);
+	if (!img->addr) // Does addr get freed with mlx_destroy_image()?
 		clean_and_exit(mlx_res, map_res, EXIT_FAILURE);
 	while (column < mlx_res->screen_size[X])
 	{

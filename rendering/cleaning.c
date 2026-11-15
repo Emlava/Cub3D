@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 14:47:50 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/07 14:14:02 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 16:33:53 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	destroy_mlx_res(t_mlx_res *mlx_res)
 {
 	if (!mlx_res->mlx_id)
 		return ;
-	if (mlx_res->img)
-		mlx_destroy_image(mlx_res->mlx_id, mlx_res->img);
+	if (mlx_res->img.id)
+		mlx_destroy_image(mlx_res->mlx_id, mlx_res->img.id);
 	if (mlx_res->win)
 		mlx_destroy_window(mlx_res->mlx_id, mlx_res->win);
 	mlx_destroy_display(mlx_res->mlx_id);
