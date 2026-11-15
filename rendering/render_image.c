@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 16:45:28 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 17:27:41 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ static void	correct_fishbowl_effect(double ray_length, double ray_angle,
 	return ;
 }
 
+static void	draw_pixel()
+{}
+
+static void	draw_column()
+{}
+
 void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res)
 {
@@ -44,7 +50,6 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 	if (ray_angle < 0)
 		ray_angle += 360;
 	column = 0;
-	// LEFT OFF HERE: Should it be img_1 or img_2
 	img = &mlx_res->img;
 	img->id = mlx_new_image(mlx_res->mlx_id,
 		mlx_res->screen_size[X], mlx_res->screen_size[Y]);
@@ -67,5 +72,6 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 			ray_angle += 360;
 		column += 1;
 	}
+	// Push image to window
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/07 14:02:37 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 17:38:08 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_mlx_res(t_mlx_res *mlx_res)
 {
 	mlx_res->mlx_id = NULL;
 	mlx_res->win = NULL;
-	mlx_res->img = NULL;
+	mlx_res->img.id = NULL;
 	return ;
 }
 

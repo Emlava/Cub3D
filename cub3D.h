@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 16:44:43 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/15 17:18:35 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ typedef struct s_mlx_resources
 	void	*mlx_id;
 	int		screen_size[2];
 	void	*win;
-	t_img	img_1;
-	t_img	img_2;
+	t_img	img;
 }	t_mlx_res;
 
 // parsing/process_file.c
