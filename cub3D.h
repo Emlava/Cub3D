@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 17:18:35 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/16 20:36:32 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ typedef struct s_player_resources
 {
 	int				coords[2];
 	unsigned int	viewing_angle;
-	unsigned int	d_to_proj_plane;
+	double			d_to_proj_plane;
 	double			angle_between_rays;
+	double			ray_angle;
+	double			ray_length;
 }	t_player_res;
 
 typedef struct s_img
@@ -133,15 +135,15 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res);
 
 // rendering/cast_ray.c
-double	cast_ray(int player_coords[2], t_map_res *map_res, double ray_angle);
+void	cast_ray(t_player_res *player, t_map_res *map_res);
 
 // horizontal_intersections.c
-void	check_horizontal_intersections(int player_coords[2],
-			t_map_res *map_res, double ray_angle, int curr_intersection[2]);
+void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
+	int curr_intersection[2]);
 
 // vertical_intersections.c
-void	check_vertical_intersections(int player_coords[2],
-			t_map_res *map_res, double ray_angle, int curr_intersection[2]);
+void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
+	int curr_intersection[2]);
 
 // rendering/ray_utils.c
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,

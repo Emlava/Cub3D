@@ -6,23 +6,23 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:43:01 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 14:59:58 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/16 20:27:21 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
 static void	find_nearest_intersection(int curr_intersection[2],
-	double ray_angle, int player_coords[2], double ray_angle_in_rad)
+	t_player_res *player, double ray_angle_in_rad)
 {
-	curr_intersection[X] = (int)(player_coords[X] / WORLD_SIDE_LENGTH)
+	curr_intersection[X] = (int)(player->coords[X] / WORLD_SIDE_LENGTH)
 		* WORLD_SIDE_LENGTH;
-	if (ray_angle < 90 || ray_angle > 270) // Facing right
+	if (player->ray_angle < 90 || player->ray_angle > 270) // Facing right
 		curr_intersection[X] += WORLD_SIDE_LENGTH;
 	else // Facing left
 		curr_intersection[X] -= 1;
-	curr_intersection[Y] = player_coords[Y]
-		+ round((player_coords[X] - curr_intersection[X]) * tan(ray_angle_in_rad));
+	curr_intersection[Y] = player->coords[Y]
+		+ round((player->coords[X] - curr_intersection[X]) * tan(ray_angle_in_rad));
 	return ;
 }
 
@@ -38,8 +38,8 @@ static void	determine_steps(int *x_step, int *y_step, double ray_angle,
 	return ;
 }
 
-void	check_vertical_intersections(int player_coords[2], t_map_res *map_res,
-	double ray_angle, int curr_intersection[2])
+void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
+	int curr_intersection[2])
 {
 	double	ray_angle_in_rad;
 	int		grid_coords[2];
@@ -47,16 +47,16 @@ void	check_vertical_intersections(int player_coords[2], t_map_res *map_res,
 	int		y_step;
 	
 	// Avoid a tan of 0, which would lead to a division by 0
-	if (ray_angle == 90 || ray_angle == 270)
+	if (player->ray_angle == 90 || player->ray_angle == 270)
 	{
 		curr_intersection[X] = INT_MAX;
 		curr_intersection[Y] = INT_MAX;
 		return ;
 	}
-	ray_angle_in_rad = ray_angle * (PI / 180);
+	ray_angle_in_rad = (player->ray_angle * PI) / 180;
 
 	// Find the nearest intersection coordinates
-	find_nearest_intersection(curr_intersection, ray_angle, player_coords,
+	find_nearest_intersection(curr_intersection, player,
 		ray_angle_in_rad);
 	grid_coords[X] = curr_intersection[X] / WORLD_SIDE_LENGTH;
 	grid_coords[Y] = curr_intersection[Y] / WORLD_SIDE_LENGTH;
@@ -64,7 +64,7 @@ void	check_vertical_intersections(int player_coords[2], t_map_res *map_res,
 	if (is_inside_the_map(grid_coords, map_res, curr_intersection)
 		&& !wall_check(grid_coords, map_res))
 	{	
-		determine_steps(&x_step, &y_step, ray_angle, ray_angle_in_rad);
+		determine_steps(&x_step, &y_step, player->ray_angle, ray_angle_in_rad);
 		find_wall(curr_intersection, x_step, y_step, map_res);
 	}
 	return ;

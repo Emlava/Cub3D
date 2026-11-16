@@ -1,5 +1,5 @@
 NAME = cub3D
-CC = cc
+CC = clang
 REQUIRED_FLAGS = -Wall -Werror -Wextra -g
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a

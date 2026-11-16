@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 14:43:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/16 19:40:15 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ static double	d_from_player_to_wall(int player_coords[2], int wall_coords[2])
 	return (sqrt(pow((double)x_diff, 2.0) + pow((double)y_diff, 2.0)));
 }
 
-double	cast_ray(int player_coords[2], t_map_res *map_res, double ray_angle)
+void	cast_ray(t_player_res *player, t_map_res *map_res)
 {
 	int				horizontal_wall_intersection[2];
 	int				vertical_wall_intersection[2];
 	unsigned int	distance_h;
 	unsigned int	distance_v;
 
-	check_horizontal_intersections(player_coords, map_res, ray_angle,
-		horizontal_wall_intersection);
-	check_vertical_intersections(player_coords, map_res, ray_angle,
-		vertical_wall_intersection);
-	distance_h = d_from_player_to_wall(player_coords, horizontal_wall_intersection);
-	distance_v = d_from_player_to_wall(player_coords, vertical_wall_intersection);
+	check_horizontal_intersections(player, map_res, horizontal_wall_intersection);
+	check_vertical_intersections(player, map_res, vertical_wall_intersection);
+	distance_h = d_from_player_to_wall(player->coords, horizontal_wall_intersection);
+	distance_v = d_from_player_to_wall(player->coords, vertical_wall_intersection);
 	if (distance_h < distance_v)
-		return (distance_h);
-	return (distance_v);
+		player->ray_length = distance_h;
+	else
+	player->ray_length = distance_v;
+	return ;
 }
