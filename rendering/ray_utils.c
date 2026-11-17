@@ -6,14 +6,14 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 17:34:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 14:41:20 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/17 21:29:13 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
-	int intersection[2])
+	double intersection[2])
 {
 	if (grid_coords[Y] < 0 || grid_coords[Y] >= map_res->nbr_of_rows
 		|| grid_coords[X] < 0
@@ -34,22 +34,35 @@ t_bool	wall_check(int grid_coords[2], t_map_res *map_res)
 	return (FALSE);
 }
 
-void	find_wall(int curr_intersection[2], int x_step, int y_step,
+void	define_grid_coords(double intersection[2], int grid_coords[2])
+{
+	if (intersection[X] < 0 || intersection[Y] < 0)
+	{
+		grid_coords[X] = -1;
+		grid_coords[Y] = -1;
+	}
+	else
+	{
+		grid_coords[X] = intersection[X] / WORLD_SIDE_LENGTH;
+		grid_coords[Y] = intersection[Y] / WORLD_SIDE_LENGTH;
+	}
+	return ;
+}
+
+void	find_wall(double curr_intersection[2], double x_step, double y_step,
 	t_map_res *map_res)
 {
 	int	grid_coords[2];
 
 	curr_intersection[X] += x_step;
 	curr_intersection[Y] += y_step;
-	grid_coords[X] = curr_intersection[X] / WORLD_SIDE_LENGTH;
-	grid_coords[Y] = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	define_grid_coords(curr_intersection, grid_coords);
 	while (is_inside_the_map(grid_coords, map_res, curr_intersection)
 		&& !wall_check(grid_coords, map_res))
 	{
 		curr_intersection[X] += x_step;
 		curr_intersection[Y] += y_step;
-		grid_coords[X] = curr_intersection[X] / WORLD_SIDE_LENGTH;
-		grid_coords[Y] = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+		define_grid_coords(curr_intersection, grid_coords);
 	}
 	return ;
 }

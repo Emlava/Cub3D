@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/16 20:44:13 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/17 19:04:11 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ int	main(int ac, char *av[])
 	render_image(&player, &mlx_res, &map_res);
 	// Set hooks so that the image is modified according to the events
 	
-	// mlx_loop(mlx_res.mlx_id);
+	mlx_loop(mlx_res.mlx_id);
 	clean_and_exit(&mlx_res, &map_res, EXIT_SUCCESS);
 }

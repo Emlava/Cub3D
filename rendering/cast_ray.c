@@ -6,28 +6,28 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/16 19:40:15 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/17 21:27:29 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static double	d_from_player_to_wall(int player_coords[2], int wall_coords[2])
+static double	d_from_player_to_wall(int player_coords[2], double wall_coords[2])
 {
-	int	x_diff;
-	int	y_diff;
+	double	x_diff;
+	double	y_diff;
 
 	x_diff = player_coords[X] - wall_coords[X];
 	y_diff = player_coords[Y] - wall_coords[Y];
-	return (sqrt(pow((double)x_diff, 2.0) + pow((double)y_diff, 2.0)));
+	return (sqrt(pow(x_diff, 2.0) + pow(y_diff, 2.0)));
 }
 
 void	cast_ray(t_player_res *player, t_map_res *map_res)
 {
-	int				horizontal_wall_intersection[2];
-	int				vertical_wall_intersection[2];
-	unsigned int	distance_h;
-	unsigned int	distance_v;
+	double			horizontal_wall_intersection[2];
+	double			vertical_wall_intersection[2];
+	double			distance_h;
+	double			distance_v;
 
 	check_horizontal_intersections(player, map_res, horizontal_wall_intersection);
 	check_vertical_intersections(player, map_res, vertical_wall_intersection);

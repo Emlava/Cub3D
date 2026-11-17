@@ -6,13 +6,13 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:43:01 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/16 20:27:21 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/17 21:30:21 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static void	find_nearest_intersection(int curr_intersection[2],
+static void	find_nearest_intersection(double curr_intersection[2],
 	t_player_res *player, double ray_angle_in_rad)
 {
 	curr_intersection[X] = (int)(player->coords[X] / WORLD_SIDE_LENGTH)
@@ -26,28 +26,30 @@ static void	find_nearest_intersection(int curr_intersection[2],
 	return ;
 }
 
-static void	determine_steps(int *x_step, int *y_step, double ray_angle,
+// cf. determine_steps from horizontal_intersections.c
+static void	determine_steps(double *x_step, double *y_step, double ray_angle,
 	double ray_angle_in_rad)
 {
 	*x_step = WORLD_SIDE_LENGTH;
+	*y_step = WORLD_SIDE_LENGTH * tan(ray_angle_in_rad);
 	if (ray_angle > 90 && ray_angle < 270) // Facing left
 		*x_step = -(*x_step);
-	*y_step = WORLD_SIDE_LENGTH * tan(ray_angle_in_rad);
-	if (ray_angle < 180)
+	else
 		*y_step = -(*y_step);
 	return ;
 }
 
 void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
-	int curr_intersection[2])
+	double curr_intersection[2])
 {
 	double	ray_angle_in_rad;
 	int		grid_coords[2];
-	int		x_step;
-	int		y_step;
+	double	x_step;
+	double	y_step;
 	
-	// Avoid a tan of 0, which would lead to a division by 0
-	if (player->ray_angle == 90 || player->ray_angle == 270)
+	// Manage a ray parallel to grid lines
+	if (fabs(player->ray_angle - 90) < 0.0001
+	|| fabs(player->ray_angle - 270) < 0.0001)
 	{
 		curr_intersection[X] = INT_MAX;
 		curr_intersection[Y] = INT_MAX;
@@ -58,8 +60,7 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 	// Find the nearest intersection coordinates
 	find_nearest_intersection(curr_intersection, player,
 		ray_angle_in_rad);
-	grid_coords[X] = curr_intersection[X] / WORLD_SIDE_LENGTH;
-	grid_coords[Y] = curr_intersection[Y] / WORLD_SIDE_LENGTH;
+	define_grid_coords(curr_intersection, grid_coords);
 	
 	if (is_inside_the_map(grid_coords, map_res, curr_intersection)
 		&& !wall_check(grid_coords, map_res))

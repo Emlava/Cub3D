@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/16 20:52:23 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/17 21:32:46 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,9 @@ static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
 		- (projected_wall_height / 2);
 	if (y < 0) // Projected wall is taller than screen
 		y = 0;
-	//
-	// printf("\nProjected wall height: %d\n", projected_wall_height);
-	// printf("Screen height: %d\n", mlx_res->screen_size[Y]);
-	// printf("Half of projected wall height: %d\n", projected_wall_height / 2);
-	// printf("Half of screen height: %d\n", mlx_res->screen_size[Y] / 2);
-	// printf("First half minus second half: %d", (mlx_res->screen_size[Y] / 2) - (projected_wall_height / 2));
-	//
-	
-	// LEFT OFF HERE: The SEGFAULT is coming from mlx_put_image_to_window()
-	// Already guarded against the projected wall being taller than the screen
-
 	
 	i = 0;
-	while (i < projected_wall_height && y <= mlx_res->screen_size[Y]) // Should the second condition use < or <=?
+	while (i < projected_wall_height && y < mlx_res->screen_size[Y]) // Should the second condition use < or <=?
 	{
 		draw_pixel(img, column, y, 0x000000FF);
 		y += 1;
@@ -101,11 +90,17 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 		
 		draw_column(img, player, mlx_res, column);
 
+		//
+		if (column == 0 || column == 1920 || column == 3839)
+		{
+			printf("Column: %d, ray angle: %.2f\n", column, player->ray_angle);
+		}
+		//
 		player->ray_angle -= player->angle_between_rays;
 		if (player->ray_angle < 0)
 			player->ray_angle += 360;
 		column += 1;
 	}
-	mlx_put_image_to_window(mlx_res->mlx_id, mlx_res->win, img, 0, 0);
+	mlx_put_image_to_window(mlx_res->mlx_id, mlx_res->win, img->id, 0, 0);
 	return ;
 }
