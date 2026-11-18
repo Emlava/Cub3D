@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 21:28:11 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 18:54:14 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,18 @@ static void	find_nearest_intersection(double curr_intersection[2],
 
 // The signed is flipped for x_step if we're facing down, as the tangent
 // of the angle divided by the side length will always be the opposite sign
-// of the one we need (the tangent is negative if cos and sin are of different signs)
+// of the one we need (the tangent is negative only if cos and sin are of different signs)
 static void	determine_steps(double *x_step, double *y_step, double ray_angle,
 	double ray_angle_in_rad)
 {
 	*x_step = WORLD_SIDE_LENGTH / tan(ray_angle_in_rad);
-	*y_step = WORLD_SIDE_LENGTH;
-	if (ray_angle < 180)
-	 {
+	if (ray_angle > 180)
+	{
 		*x_step = -(*x_step);
-		*y_step = -(*y_step);
-	 }
+		*y_step = WORLD_SIDE_LENGTH;
+	}
+	 else
+		*y_step = -WORLD_SIDE_LENGTH;
 	return ;
 }
 

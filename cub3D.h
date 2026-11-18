@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 21:29:47 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 19:51:27 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	remove_trailing_empty_rows(t_map_res *map_res, int y);
 // parsing/field_utils.c
 t_bool	line_is_not_map(char *line);
 void	ignore_white_space(char **line);
+t_bool	empty_spaces_in_path(char *path);
 
 // parsing/cleaning.c
 void	free_map_res(t_map_res *map_res);

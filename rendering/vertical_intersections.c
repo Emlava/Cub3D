@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:43:01 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 21:30:21 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 18:55:24 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ static void	find_nearest_intersection(double curr_intersection[2],
 static void	determine_steps(double *x_step, double *y_step, double ray_angle,
 	double ray_angle_in_rad)
 {
-	*x_step = WORLD_SIDE_LENGTH;
 	*y_step = WORLD_SIDE_LENGTH * tan(ray_angle_in_rad);
 	if (ray_angle > 90 && ray_angle < 270) // Facing left
-		*x_step = -(*x_step);
+		*x_step = -WORLD_SIDE_LENGTH;
 	else
+	 {
+		*x_step = WORLD_SIDE_LENGTH;
 		*y_step = -(*y_step);
+	 }
 	return ;
 }
 

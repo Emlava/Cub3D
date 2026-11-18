@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 21:32:46 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 20:36:36 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,18 @@ static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
 	if (y < 0) // Projected wall is taller than screen
 		y = 0;
 	
+	// Draw the ceiling using a loop with the condition i < y,
+	// then assign 0 back to i
+	
 	i = 0;
-	while (i < projected_wall_height && y < mlx_res->screen_size[Y]) // Should the second condition use < or <=?
+	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
 	{
 		draw_pixel(img, column, y, 0x000000FF);
 		y += 1;
 		i += 1;
 	}
+	// Draw the floor using a loop with the condition y < screen_size[Y],
+	// using y as the counter
 	return ;
 }
 
@@ -90,12 +95,6 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 		
 		draw_column(img, player, mlx_res, column);
 
-		//
-		if (column == 0 || column == 1920 || column == 3839)
-		{
-			printf("Column: %d, ray angle: %.2f\n", column, player->ray_angle);
-		}
-		//
 		player->ray_angle -= player->angle_between_rays;
 		if (player->ray_angle < 0)
 			player->ray_angle += 360;
