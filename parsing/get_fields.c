@@ -6,21 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/02 20:51:47 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 20:25:24 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-static t_bool	empty_spaces_in_path(char *path)
-{
-	while (*path && !ft_isspace(*path))
-		path++;
-	ignore_white_space(&path);
-	if (*path && *path != '\n')
-		return (TRUE);
-	return (FALSE);
-}
 
 int	get_meridian_texture(char *line, t_map_res *map_res, char *direction)
 {
@@ -75,6 +65,8 @@ static void	go_to_next_color(char **line)
 	ignore_white_space(line);
 }
 
+// LEFT OFF HERE: Make ceiling and floor ints, and make a function to
+// store the correct color in each byte using bitwise operations
 int	get_color(char *line, t_map_res *map_res, char c)
 {
 	int	i;

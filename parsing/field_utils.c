@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/12 18:50:20 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/02 21:02:00 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/18 19:51:09 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,14 @@ void	ignore_white_space(char **line)
 	while (**line != '\n' && ft_isspace(**line))
 		(*line)++;
 	return ;
+}
+
+t_bool	empty_spaces_in_path(char *path)
+{
+	while (*path && !ft_isspace(*path))
+		path++;
+	ignore_white_space(&path);
+	if (*path && *path != '\n')
+		return (TRUE);
+	return (FALSE);
 }
