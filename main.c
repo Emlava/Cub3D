@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 19:04:11 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/19 11:26:18 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	init_map_res(t_map_res *map_res)
 	map_res->south = NULL;
 	map_res->west = NULL;
 	map_res->east = NULL;
-	map_res->ceiling_is_set = FALSE;
-	map_res->floor_is_set = FALSE;
+	map_res->ceiling = -1;
+	map_res->floor = -1;
 	map_res->map = NULL;
 	map_res->nbr_of_rows = 0;
 	map_res->size_of_longest_row = 0;

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/18 20:36:36 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/19 11:38:27 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,29 @@ static void	draw_pixel(t_img *img, int x, int y, int color)
 	return ;
 }
 
+// LEFT OFF HERE: Restructure function to take only 4 arguments
 static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
-	int column)
+	int column, t_map_res *map_res)
 {
 	int	projected_wall_height;
+	int	wall_start_position;
 	int	y;
 	int	i;
 	
 	projected_wall_height = (WORLD_SIDE_LENGTH / player->ray_length)
 		* player->d_to_proj_plane;
-	y = (mlx_res->screen_size[Y] / 2)
+	wall_start_position = (mlx_res->screen_size[Y] / 2)
 		- (projected_wall_height / 2);
-	if (y < 0) // Projected wall is taller than screen
-		y = 0;
+	if (wall_start_position < 0) // Projected wall is taller than screen
+		wall_start_position = 0;
 	
-	// Draw the ceiling using a loop with the condition i < y,
-	// then assign 0 back to i
+	y = 0;
+	// Draw ceiling
+	while (y < wall_start_position)
+	{
+		draw_pixel(img, column, y, map_res->ceiling);
+		y += 1;
+	}
 	
 	i = 0;
 	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
@@ -66,6 +73,11 @@ static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
 	}
 	// Draw the floor using a loop with the condition y < screen_size[Y],
 	// using y as the counter
+	while (y < mlx_res->screen_size[Y])
+	{
+		draw_pixel(img, column, y, map_res->floor);
+		y += 1;
+	}
 	return ;
 }
 
@@ -93,7 +105,7 @@ void	render_image(t_player_res *player, t_mlx_res *mlx_res,
 		cast_ray(player, map_res);
 		correct_fishbowl_effect(player);
 		
-		draw_column(img, player, mlx_res, column);
+		draw_column(img, player, mlx_res, column, map_res);
 
 		player->ray_angle -= player->angle_between_rays;
 		if (player->ray_angle < 0)
