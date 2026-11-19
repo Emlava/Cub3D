@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/01 19:36:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/02 20:57:55 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/19 10:52:07 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static int	store_field(char *line, t_map_res *map_res)
 		&& map_res->east == NULL)
 		return (get_parallel_texture(line + 3, map_res, "EA"));
 	else if (line[0] == 'C' && ft_isspace(line[1])
-		&& map_res->ceiling_is_set == FALSE)
+		&& map_res->ceiling == -1)
 		return (get_color(line + 2, map_res, 'C'));
 	else if (line[0] == 'F' && ft_isspace(line[1])
-		&& map_res->floor_is_set == FALSE)
+		&& map_res->floor == -1)
 		return (get_color(line + 2, map_res, 'F'));
 	else
 		return (-1);
@@ -42,7 +42,7 @@ static int	store_field(char *line, t_map_res *map_res)
 static void	check_for_missing_fields(char *line, t_map_res *map_res)
 {
 	if (!map_res->north || !map_res->south || !map_res->east || !map_res->west
-		|| map_res->ceiling_is_set == FALSE || map_res->floor_is_set == FALSE)
+		|| map_res->ceiling == -1 || map_res->floor == -1)
 	{
 		ft_dprintf(2, "Error\nLine of map found before all texture or "
 			"color fields were entered\n");

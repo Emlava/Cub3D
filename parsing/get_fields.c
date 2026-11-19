@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 17:22:49 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/18 20:25:24 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/19 11:36:02 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,26 @@ static void	go_to_next_color(char **line)
 	ignore_white_space(line);
 }
 
-// LEFT OFF HERE: Make ceiling and floor ints, and make a function to
-// store the correct color in each byte using bitwise operations
-int	get_color(char *line, t_map_res *map_res, char c)
+static int	rgb_to_single_int(int rgb[3])
 {
 	int	i;
 	int	color;
+
+	i = 0;
+	color = 0;
+	while (i < 3)
+	{
+		color <<= 8;
+		color |= rgb[i];
+		i += 1;
+	}
+	return (color);
+}
+
+int	get_color(char *line, t_map_res *map_res, char c)
+{
+	int	i;
+	int	rgb[3];
 
 	i = 0;
 	ignore_white_space(&line);
@@ -78,20 +92,17 @@ int	get_color(char *line, t_map_res *map_res, char c)
 	{
 		if (i > 2 || !ft_isdigit(*line))
 			return (-1);
-		color = ft_atoi(line);
-		if (color > 255)
+		rgb[i] = ft_atoi(line);
+		if (rgb[i] > 255)
 			return (-1);
-		if (c == 'C')
-			map_res->ceiling[i++] = color;
-		else if (c == 'F')
-			map_res->floor[i++] = color;
+		i += 1;
 		go_to_next_color(&line);
 	}
 	if (i < 3)
 		return (-1);
-	if (c == 'C')
-		map_res->ceiling_is_set = TRUE;
-	else if (c == 'F')
-		map_res->floor_is_set = TRUE;
+	if (c == 'C')	
+		map_res->ceiling = rgb_to_single_int(rgb);
+	else
+		map_res->floor = rgb_to_single_int(rgb);
 	return (0);
 }
