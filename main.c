@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 15:52:34 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 17:20:11 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	main(int ac, char *av[])
 	if (!mlx_res.win)
 		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
 	render_frame(&player, &mlx_res, &map_res);
+
 	// Set hooks so that the image is modified according to the events
 	
 	mlx_loop(mlx_res.mlx_id);

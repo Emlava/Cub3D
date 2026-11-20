@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 15:51:52 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 17:01:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,18 @@ typedef struct s_texture
 {
 	void	*id;
 	int		size[2];
+	char	*addr;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
 }	t_texture;
 
 typedef struct s_mlx_resources
 {
-	void	*mlx_id;
-	int		screen_size[2];
-	void	*win;
-	t_img	img;
+	void		*mlx_id;
+	int			screen_size[2];
+	void		*win;
+	t_img		img;
 	t_texture	north;
 	t_texture	south;
 	t_texture	west;

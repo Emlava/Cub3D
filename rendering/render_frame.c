@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 16:09:45 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 17:24:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	if (wall_start_position < 0) // Projected wall is taller than screen
 		wall_start_position = 0;
 	y = 0;
-	// Draw ceiling
+	// Draw ceiling slice
 	while (y < wall_start_position)
 	{
 		draw_pixel(&mlx_res->img, column, y, map_res->ceiling);
@@ -63,13 +63,17 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	}
 	
 	i = 0;
+	// LEFT OFF HERE: Manage the texture of the current wall slice.
+	// Figure out how to know on what side of the map is the wall.
+	// Is it by checking the actual map coordinates or the ray angle?
+	// Draw wall slice
 	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
 	{
 		draw_pixel(&mlx_res->img, column, y, 0x00663300);
 		y += 1;
 		i += 1;
 	}
-	// Draw floor
+	// Draw floor slice
 	while (y < mlx_res->screen_size[Y])
 	{
 		draw_pixel(&mlx_res->img, column, y, map_res->floor);
