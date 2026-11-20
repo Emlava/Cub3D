@@ -6,11 +6,11 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 14:47:50 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/15 16:33:53 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:12:08 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "cub3D.h"
 
 void	destroy_mlx_res(t_mlx_res *mlx_res)
 {
@@ -18,6 +18,20 @@ void	destroy_mlx_res(t_mlx_res *mlx_res)
 		return ;
 	if (mlx_res->img.id)
 		mlx_destroy_image(mlx_res->mlx_id, mlx_res->img.id);
+	if (mlx_res->north.id)
+	{
+		mlx_destroy_image(mlx_res->mlx_id, mlx_res->north.id);
+		if (mlx_res->south.id)
+		{
+			mlx_destroy_image(mlx_res->mlx_id, mlx_res->south.id);
+			if (mlx_res->west.id)
+			{
+				mlx_destroy_image(mlx_res->mlx_id, mlx_res->west.id);
+				if (mlx_res->east.id)
+					mlx_destroy_image(mlx_res->mlx_id, mlx_res->east.id);
+			}
+		}
+	}
 	if (mlx_res->win)
 		mlx_destroy_window(mlx_res->mlx_id, mlx_res->win);
 	mlx_destroy_display(mlx_res->mlx_id);

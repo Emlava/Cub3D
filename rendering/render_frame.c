@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_image.c                                     :+:      :+:    :+:   */
+/*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/19 11:38:27 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:47:39 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ static void	draw_pixel(t_img *img, int x, int y, int color)
 	return ;
 }
 
-// LEFT OFF HERE: Restructure function to take only 4 arguments
-static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
-	int column, t_map_res *map_res)
+static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map_res,
+	int column)
 {
 	int	projected_wall_height;
 	int	wall_start_position;
@@ -55,63 +54,49 @@ static void	draw_column(t_img *img, t_player_res *player, t_mlx_res *mlx_res,
 		- (projected_wall_height / 2);
 	if (wall_start_position < 0) // Projected wall is taller than screen
 		wall_start_position = 0;
-	
 	y = 0;
 	// Draw ceiling
 	while (y < wall_start_position)
 	{
-		draw_pixel(img, column, y, map_res->ceiling);
+		draw_pixel(&mlx_res->img, column, y, map_res->ceiling);
 		y += 1;
 	}
 	
 	i = 0;
 	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
 	{
-		draw_pixel(img, column, y, 0x000000FF);
+		draw_pixel(&mlx_res->img, column, y, 0x000000FF);
 		y += 1;
 		i += 1;
 	}
-	// Draw the floor using a loop with the condition y < screen_size[Y],
-	// using y as the counter
+	// Draw floor
 	while (y < mlx_res->screen_size[Y])
 	{
-		draw_pixel(img, column, y, map_res->floor);
+		draw_pixel(&mlx_res->img, column, y, map_res->floor);
 		y += 1;
 	}
 	return ;
 }
 
-void	render_image(t_player_res *player, t_mlx_res *mlx_res,
+void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res)
 {
 	int		column;
-	t_img	*img;
 
 	player->ray_angle = player->viewing_angle + (FOV / 2);
 	if (player->ray_angle < 0)
 		player->ray_angle += 360;
 	column = 0;
-	img = &mlx_res->img;
-	img->id = mlx_new_image(mlx_res->mlx_id,
-		mlx_res->screen_size[X], mlx_res->screen_size[Y]);
-	if (!img->id)
-		clean_and_exit(mlx_res, map_res, EXIT_FAILURE);
-	img->addr = mlx_get_data_addr(img->id, &img->bits_per_pixel, &img->size_line,
-		&img->endian);
-	if (!img->addr) // Does addr get freed with mlx_destroy_image()?
-		clean_and_exit(mlx_res, map_res, EXIT_FAILURE);
 	while (column < mlx_res->screen_size[X])
 	{
 		cast_ray(player, map_res);
 		correct_fishbowl_effect(player);
-		
-		draw_column(img, player, mlx_res, column, map_res);
-
+		draw_column(mlx_res, player, map_res, column);
 		player->ray_angle -= player->angle_between_rays;
 		if (player->ray_angle < 0)
 			player->ray_angle += 360;
 		column += 1;
 	}
-	mlx_put_image_to_window(mlx_res->mlx_id, mlx_res->win, img->id, 0, 0);
+	mlx_put_image_to_window(mlx_res->mlx_id, mlx_res->win, mlx_res->img.id, 0, 0);
 	return ;
 }

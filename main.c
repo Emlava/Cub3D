@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/19 11:26:18 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:52:34 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,6 @@ void	print_info(t_player_res *player, t_mlx_res *mlx_res)
 	printf("Angle between rays: %g\n", player->angle_between_rays);
 	printf("Width of screen: %d\n", mlx_res->screen_size[X]);
 	printf("Height of screen: %d\n", mlx_res->screen_size[Y]);
-	return ;
-}
-
-void	init_map_res(t_map_res *map_res)
-{
-	map_res->north = NULL;
-	map_res->south = NULL;
-	map_res->west = NULL;
-	map_res->east = NULL;
-	map_res->ceiling = -1;
-	map_res->floor = -1;
-	map_res->map = NULL;
-	map_res->nbr_of_rows = 0;
-	map_res->size_of_longest_row = 0;
 	return ;
 }
 
@@ -61,41 +47,20 @@ void	get_player_info(t_player_res *player, int width_of_plane)
 	return ;
 }
 
-void	init_mlx_res(t_mlx_res *mlx_res)
-{
-	mlx_res->mlx_id = NULL;
-	mlx_res->win = NULL;
-	mlx_res->img.id = NULL;
-	return ;
-}
-
 int	main(int ac, char *av[])
 {
 	t_map_res		map_res;
 	t_player_res	player;
 	t_mlx_res		mlx_res;
 
-	init_map_res(&map_res);
 	process_file(ac, av, &map_res, &player);
-
-	init_mlx_res(&mlx_res);
-	
-	mlx_res.mlx_id = mlx_init();
-	if (!mlx_res.mlx_id)
-		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
-	mlx_get_screen_size(mlx_res.mlx_id, &mlx_res.screen_size[X], &mlx_res.screen_size[Y]);
+	prepare_display(&mlx_res, &map_res);
 	get_player_info(&player, mlx_res.screen_size[X]);
-	
-	//
-	print_info(&player, &mlx_res);
-	//
-	
-	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size[X], mlx_res.screen_size[Y], av[1]);
+	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size[X],
+		mlx_res.screen_size[Y], av[1]);
 	if (!mlx_res.win)
 		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
-	
-	// Render first image and place it in the window
-	render_image(&player, &mlx_res, &map_res);
+	render_frame(&player, &mlx_res, &map_res);
 	// Set hooks so that the image is modified according to the events
 	
 	mlx_loop(mlx_res.mlx_id);

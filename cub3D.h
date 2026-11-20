@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/19 10:52:07 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 15:51:52 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,22 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_texture
+{
+	void	*id;
+	int		size[2];
+}	t_texture;
+
 typedef struct s_mlx_resources
 {
 	void	*mlx_id;
 	int		screen_size[2];
 	void	*win;
 	t_img	img;
+	t_texture	north;
+	t_texture	south;
+	t_texture	west;
+	t_texture	east;
 }	t_mlx_res;
 
 // parsing/process_file.c
@@ -129,8 +139,11 @@ t_bool	empty_spaces_in_path(char *path);
 void	free_map_res(t_map_res *map_res);
 void	free_map_buff(t_map_buff *map_buff);
 
-// rendering/render_image.c
-void	render_image(t_player_res *player, t_mlx_res *mlx_res,
+// prepare_display.c
+int		prepare_display(t_mlx_res *mlx_res, t_map_res *map_res);
+
+// rendering/render_frame.c
+void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res);
 
 // rendering/cast_ray.c
@@ -138,21 +151,21 @@ void	cast_ray(t_player_res *player, t_map_res *map_res);
 
 // horizontal_intersections.c
 void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
-	double curr_intersection[2]);
+			double curr_intersection[2]);
 
 // vertical_intersections.c
 void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
-	double curr_intersection[2]);
+			double curr_intersection[2]);
 
 // rendering/ray_utils.c
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
-	double intersection[2]);
+			double intersection[2]);
 t_bool	wall_check(int grids_coords[2], t_map_res *map_res);
 void	define_grid_coords(double intersection[2], int grid_coords[2]);
 void	find_wall(double curr_intersection[2], double x_step, double y_step,
 			t_map_res *map_res);
 	
-// rendering/cleaning.c
+// cleaning.c
 void	destroy_mlx_res(t_mlx_res *mlx_res);
 void	clean_and_exit(t_mlx_res *mlx_res, t_map_res *map_res, int exit_status);
 
