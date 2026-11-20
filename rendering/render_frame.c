@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 15:47:39 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/20 16:09:45 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	i = 0;
 	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
 	{
-		draw_pixel(&mlx_res->img, column, y, 0x000000FF);
+		draw_pixel(&mlx_res->img, column, y, 0x00663300);
 		y += 1;
 		i += 1;
 	}
