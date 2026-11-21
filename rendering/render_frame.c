@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 18:36:21 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/21 15:10:46 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	int	y;
 	int	i;
 	
+	// LEFT OFF HERE: The bug seems to be here
 	projected_wall_height = (WORLD_SIDE_LENGTH / player->ray_length)
 		* player->d_to_proj_plane;
 	wall_start_position = (mlx_res->screen_size[Y] / 2)

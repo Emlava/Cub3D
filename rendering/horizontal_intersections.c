@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/18 18:54:14 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/21 15:05:54 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
 	find_nearest_intersection(curr_intersection, player,
 		ray_angle_in_rad);
 	define_grid_coords(curr_intersection, grid_coords);
-
 	if (is_inside_the_map(grid_coords, map_res, curr_intersection)
 		&& !wall_check(grid_coords, map_res))
 	{
