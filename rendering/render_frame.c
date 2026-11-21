@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/21 15:10:46 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/21 21:53:30 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,51 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	int	y;
 	int	i;
 	
-	// LEFT OFF HERE: The bug seems to be here
-	projected_wall_height = (WORLD_SIDE_LENGTH / player->ray_length)
-		* player->d_to_proj_plane;
+	projected_wall_height = (int)round((WORLD_SIDE_LENGTH / player->ray_length)
+		* player->d_to_proj_plane);
+	//
+	// static int	j;
+	
+	// if (!j)
+	// {
+	// 	printf("Projected wall height: %d\n", projected_wall_height);
+	// 	j++;
+	// }
+	//
+
 	wall_start_position = (mlx_res->screen_size[Y] / 2)
 		- (projected_wall_height / 2);
 	if (wall_start_position < 0) // Projected wall is taller than screen
 		wall_start_position = 0;
 	y = 0;
+
+	// LEFT OFF HERE: Here we find the biggest step on the left
+	static int	consec_start_positions[2];
+
+	if (!column)
+		consec_start_positions[0] = wall_start_position;
+	else if (column == 1)
+		consec_start_positions[1] = wall_start_position;
+	else
+	{
+		consec_start_positions[0] = consec_start_positions[1];
+		consec_start_positions[1] = wall_start_position;
+	}
+	if (column && consec_start_positions[1] - consec_start_positions[0] > 15)
+		printf("Column of step: %d\n", column - 1);
+	//
+
 	// Draw ceiling slice
 	while (y < wall_start_position)
 	{
+		//
+			if (column == 378)
+			{
+				draw_pixel(&mlx_res->img, column, y, 0x0000FF00);
+				y += 1;
+				continue ;
+			}
+		//
 		draw_pixel(&mlx_res->img, column, y, map_res->ceiling);
 		y += 1;
 	}
@@ -96,6 +130,15 @@ void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	{
 		cast_ray(player, map_res);
 		correct_fishbowl_effect(player);
+		//
+		// static int	k;
+
+		// if (!k)
+		// {
+		// 	printf("Ray length: %f\n", player->ray_length);
+		// 	k++;
+		// }
+		//
 		draw_column(mlx_res, player, map_res, column);
 		player->ray_angle -= player->angle_between_rays;
 		if (player->ray_angle < 0)
