@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 17:34:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/17 21:29:13 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 17:59:01 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,35 +34,20 @@ t_bool	wall_check(int grid_coords[2], t_map_res *map_res)
 	return (FALSE);
 }
 
-void	define_grid_coords(double intersection[2], int grid_coords[2])
-{
-	if (intersection[X] < 0 || intersection[Y] < 0)
-	{
-		grid_coords[X] = -1;
-		grid_coords[Y] = -1;
-	}
-	else
-	{
-		grid_coords[X] = intersection[X] / WORLD_SIDE_LENGTH;
-		grid_coords[Y] = intersection[Y] / WORLD_SIDE_LENGTH;
-	}
-	return ;
-}
+// void	find_wall(double curr_intersection[2], double x_step, double y_step,
+// 	t_map_res *map_res)
+// {
+// 	int	grid_coords[2];
 
-void	find_wall(double curr_intersection[2], double x_step, double y_step,
-	t_map_res *map_res)
-{
-	int	grid_coords[2];
-
-	curr_intersection[X] += x_step;
-	curr_intersection[Y] += y_step;
-	define_grid_coords(curr_intersection, grid_coords);
-	while (is_inside_the_map(grid_coords, map_res, curr_intersection)
-		&& !wall_check(grid_coords, map_res))
-	{
-		curr_intersection[X] += x_step;
-		curr_intersection[Y] += y_step;
-		define_grid_coords(curr_intersection, grid_coords);
-	}
-	return ;
-}
+// 	curr_intersection[X] += x_step;
+// 	curr_intersection[Y] += y_step;
+// 	define_grid_coords(curr_intersection, grid_coords);
+// 	while (is_inside_the_map(grid_coords, map_res, curr_intersection)
+// 		&& !wall_check(grid_coords, map_res))
+// 	{
+// 		curr_intersection[X] += x_step;
+// 		curr_intersection[Y] += y_step;
+// 		define_grid_coords(curr_intersection, grid_coords);
+// 	}
+// 	return ;
+// }

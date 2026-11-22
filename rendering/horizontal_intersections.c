@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 13:13:03 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 18:36:07 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,27 @@ static void	find_nearest_intersection(double curr_intersection[2],
 {
 	curr_intersection[Y] = (int)(player->coords[Y] / WORLD_SIDE_LENGTH)
 		* WORLD_SIDE_LENGTH;
-	if (player->ray_angle < 180) // Facing up
-			curr_intersection[Y] -= 1;
-	else // Facing down
-			curr_intersection[Y] += WORLD_SIDE_LENGTH;
+	if (player->ray_angle > 180) // Facing down
+		curr_intersection[Y] += WORLD_SIDE_LENGTH;
 	curr_intersection[X] = player->coords[X]
 	+ (player->coords[Y] - curr_intersection[Y]) / tan(ray_angle_in_rad);
+	return ;
+}
+
+static void	define_grid_coords(double intersection[2], int grid_coords[2],
+	double ray_angle)
+{
+	if (intersection[X] < 0 || intersection[Y] < 0)
+	{
+		grid_coords[X] = -1;
+		grid_coords[Y] = -1;
+		return ;
+	}
+	grid_coords[X] = intersection[X] / WORLD_SIDE_LENGTH;
+	if (ray_angle < 180) // Facing up
+		grid_coords[Y] = (intersection[Y] - 1) / WORLD_SIDE_LENGTH;
+	else
+		grid_coords[Y] = intersection[Y] / WORLD_SIDE_LENGTH;
 	return ;
 }
 
@@ -63,12 +78,14 @@ void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
 	ray_angle_in_rad = (player->ray_angle * PI) / 180;
 	find_nearest_intersection(curr_intersection, player,
 		ray_angle_in_rad);
-	define_grid_coords(curr_intersection, grid_coords);
-	if (is_inside_the_map(grid_coords, map_res, curr_intersection)
+	determine_steps(&x_step, &y_step, player->ray_angle, ray_angle_in_rad);
+	define_grid_coords(curr_intersection, grid_coords, player->ray_angle);
+	while (is_inside_the_map(grid_coords, map_res, curr_intersection)
 		&& !wall_check(grid_coords, map_res))
 	{
-		determine_steps(&x_step, &y_step, player->ray_angle, ray_angle_in_rad);
-		find_wall(curr_intersection, x_step, y_step, map_res);
+		curr_intersection[X] += x_step;
+		curr_intersection[Y] += y_step;
+		define_grid_coords(curr_intersection, grid_coords, player->ray_angle);
 	}
 	return ;
 }

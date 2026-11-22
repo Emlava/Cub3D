@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 12:41:32 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 18:05:30 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res);
 
 // rendering/cast_ray.c
-void	cast_ray(t_player_res *player, t_map_res *map_res, int col);
+void	cast_ray(t_player_res *player, t_map_res *map_res);
 
 // horizontal_intersections.c
 void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
@@ -165,9 +165,8 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
 			double intersection[2]);
 t_bool	wall_check(int grids_coords[2], t_map_res *map_res);
-void	define_grid_coords(double intersection[2], int grid_coords[2]);
-void	find_wall(double curr_intersection[2], double x_step, double y_step,
-			t_map_res *map_res);
+// void	find_wall(double curr_intersection[2], double x_step, double y_step,
+// 			t_map_res *map_res);
 	
 // cleaning.c
 void	destroy_mlx_res(t_mlx_res *mlx_res);
