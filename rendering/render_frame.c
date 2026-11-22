@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 12:19:24 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 12:41:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,31 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	y = 0;
 
 	// LEFT OFF HERE: Here we find the biggest step on the left
-	// static int	consec_start_positions[2];
+	static int	consec_start_positions[2];
 
-	// if (!column)
-	// 	consec_start_positions[0] = wall_start_position;
-	// else if (column == 1)
-	// 	consec_start_positions[1] = wall_start_position;
-	// else
-	// {
-	// 	consec_start_positions[0] = consec_start_positions[1];
-	// 	consec_start_positions[1] = wall_start_position;
-	// }
-	// if (column && consec_start_positions[1] - consec_start_positions[0] > 15)
-	// 	printf("Column of step: %d\n", column - 1);
+	if (!column)
+		consec_start_positions[0] = wall_start_position;
+	else if (column == 1)
+		consec_start_positions[1] = wall_start_position;
+	else
+	{
+		consec_start_positions[0] = consec_start_positions[1];
+		consec_start_positions[1] = wall_start_position;
+	}
+	if (column && consec_start_positions[1] - consec_start_positions[0] > 15)
+		printf("\nColumn of step: %d\n", column - 1);
 	//
 
 	// Draw ceiling slice
 	while (y < wall_start_position)
 	{
 		//
-			// if (column == 378)
-			// if (column == 1407)
-			// {
-			// 	draw_pixel(&mlx_res->img, column, y, 0x0000FF00);
-			// 	y += 1;
-			// 	continue ;
-			// }
+			if (column == 1196)
+			{
+				draw_pixel(&mlx_res->img, column, y, 0x0000FF00);
+				y += 1;
+				continue ;
+			}
 		//
 		draw_pixel(&mlx_res->img, column, y, map_res->ceiling);
 		y += 1;

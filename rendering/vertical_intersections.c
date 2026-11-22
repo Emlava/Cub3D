@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:43:01 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/21 15:06:16 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 13:13:11 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	find_nearest_intersection(double curr_intersection[2],
 	else // Facing left
 		curr_intersection[X] -= 1;
 	curr_intersection[Y] = player->coords[Y]
-		+ round((player->coords[X] - curr_intersection[X]) * tan(ray_angle_in_rad));
+		+ (player->coords[X] - curr_intersection[X]) * tan(ray_angle_in_rad);
 	return ;
 }
 

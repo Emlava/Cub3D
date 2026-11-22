@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/21 15:05:54 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 13:13:03 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	find_nearest_intersection(double curr_intersection[2],
 	else // Facing down
 			curr_intersection[Y] += WORLD_SIDE_LENGTH;
 	curr_intersection[X] = player->coords[X]
-	+ round((player->coords[Y] - curr_intersection[Y]) / tan(ray_angle_in_rad));
+	+ (player->coords[Y] - curr_intersection[Y]) / tan(ray_angle_in_rad);
 	return ;
 }
 
