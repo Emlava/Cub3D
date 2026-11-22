@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/20 17:01:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/22 11:57:00 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res);
 
 // rendering/cast_ray.c
-void	cast_ray(t_player_res *player, t_map_res *map_res);
+void	cast_ray(t_player_res *player, t_map_res *map_res, int col);
 
 // horizontal_intersections.c
 void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
