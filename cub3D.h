@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/23 20:58:44 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/23 21:35:10 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,6 @@ typedef struct s_handlers_params
 	t_player_res	*player;
 	t_mlx_res		*mlx_res;
 }	t_params;
-
-typedef struct s_handlers
-{
-	int	(*esc_exit)(int, void*);
-}	t_handlers;
 
 // parsing/process_file.c
 void	process_file(int ac, char *av[], t_map_res *map_res,

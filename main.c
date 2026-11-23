@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/23 20:58:32 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/23 21:42:48 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ void	assign_handlers_params(t_params *params, t_map_res *map_res,
 	return ;
 }
 
-void	assign_handlers_ptrs(t_handlers *handlers)
+// LEFT OFF HERE
+void	set_hooks(t_params *params)
 {
-	handlers->esc_exit = esc_exit;
+	// WASD
+	// Arrows
+	mlx_key_hook(params->mlx_res->win, esc_exit, params);
+	// Cross
 	return ;
 }
 
@@ -68,21 +72,16 @@ int	main(int ac, char *av[])
 	t_player_res	player;
 	t_mlx_res		mlx_res;
 	t_params		params;
-	t_handlers		handlers;
 
 	process_file(ac, av, &map_res, &player);
 	prepare_display(&mlx_res, &map_res);
 	get_player_info(&player, mlx_res.screen_size[X]);
 	assign_handlers_params(&params, &map_res, &player, &mlx_res);
-	assign_handlers_ptrs(&handlers);
 	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size[X],
 		mlx_res.screen_size[Y], av[1]);
 	if (!mlx_res.win)
 		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
 	render_frame(&player, &mlx_res, &map_res);
-
-	// Set hooks so that the image is modified according to the events
-	mlx_key_hook(mlx_res.win, handlers.esc_exit, &params);
+	set_hooks(&params);
 	mlx_loop(mlx_res.mlx_id);
-	clean_and_exit(&mlx_res, &map_res, EXIT_SUCCESS);
 }
