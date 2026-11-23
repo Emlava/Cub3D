@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 13:10:12 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/23 20:58:32 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,34 @@ void	get_player_info(t_player_res *player, int width_of_plane)
 	return ;
 }
 
+void	assign_handlers_params(t_params *params, t_map_res *map_res,
+	t_player_res *player, t_mlx_res *mlx_res)
+{
+	params->map_res = map_res;
+	params->player = player;
+	params->mlx_res = mlx_res;
+	return ;
+}
+
+void	assign_handlers_ptrs(t_handlers *handlers)
+{
+	handlers->esc_exit = esc_exit;
+	return ;
+}
+
 int	main(int ac, char *av[])
 {
 	t_map_res		map_res;
 	t_player_res	player;
 	t_mlx_res		mlx_res;
+	t_params		params;
+	t_handlers		handlers;
 
 	process_file(ac, av, &map_res, &player);
 	prepare_display(&mlx_res, &map_res);
 	get_player_info(&player, mlx_res.screen_size[X]);
+	assign_handlers_params(&params, &map_res, &player, &mlx_res);
+	assign_handlers_ptrs(&handlers);
 	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size[X],
 		mlx_res.screen_size[Y], av[1]);
 	if (!mlx_res.win)
@@ -63,7 +82,7 @@ int	main(int ac, char *av[])
 	render_frame(&player, &mlx_res, &map_res);
 
 	// Set hooks so that the image is modified according to the events
-	
+	mlx_key_hook(mlx_res.win, handlers.esc_exit, &params);
 	mlx_loop(mlx_res.mlx_id);
 	clean_and_exit(&mlx_res, &map_res, EXIT_SUCCESS);
 }

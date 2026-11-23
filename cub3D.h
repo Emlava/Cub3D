@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 18:05:30 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/23 20:58:44 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,18 @@ typedef struct s_mlx_resources
 	t_texture	east;
 }	t_mlx_res;
 
+typedef struct s_handlers_params
+{
+	t_map_res		*map_res;
+	t_player_res	*player;
+	t_mlx_res		*mlx_res;
+}	t_params;
+
+typedef struct s_handlers
+{
+	int	(*esc_exit)(int, void*);
+}	t_handlers;
+
 // parsing/process_file.c
 void	process_file(int ac, char *av[], t_map_res *map_res,
 			t_player_res *player);
@@ -165,9 +177,10 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
 			double intersection[2]);
 t_bool	wall_check(int grids_coords[2], t_map_res *map_res);
-// void	find_wall(double curr_intersection[2], double x_step, double y_step,
-// 			t_map_res *map_res);
 	
+// handlers.h
+int		esc_exit(int keycode, void *params);
+
 // cleaning.c
 void	destroy_mlx_res(t_mlx_res *mlx_res);
 void	clean_and_exit(t_mlx_res *mlx_res, t_map_res *map_res, int exit_status);

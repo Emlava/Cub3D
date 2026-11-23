@@ -8,7 +8,7 @@ obj/parsing/store_textures_and_colors.o obj/parsing/get_fields.o obj/parsing/fie
 obj/parsing/store_map.o obj/parsing/parse_map.o obj/parsing/map_utils.o \
 obj/parsing/parsing_cleaning.o obj/rendering/render_frame.o obj/rendering/cast_ray.o \
 obj/rendering/horizontal_intersections.o obj/rendering/vertical_intersections.o \
-obj/rendering/ray_utils.o
+obj/rendering/ray_utils.o obj/handlers.o
 
 .PHONY: all clean fclean re
 
