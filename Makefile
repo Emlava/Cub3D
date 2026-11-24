@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-REQUIRED_FLAGS = -Wall -Werror -Wextra -g
+COMP_FLAGS = -Wall -Werror -Wextra -std=gnu99
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
 OBJECTS = obj/main.o obj/prepare_display.o obj/cleaning.o obj/parsing/process_file.o \
@@ -22,10 +22,10 @@ obj/%.o: %.c
 	mkdir -p obj
 	mkdir -p obj/parsing
 	mkdir -p obj/rendering
-	$(CC) $(REQUIRED_FLAGS) -c $< -o $@
+	$(CC) $(COMP_FLAGS) -c $< -o $@
 
 $(NAME): $(LIBRARIES) $(OBJECTS)
-	$(CC) $(REQUIRED_FLAGS) $(OBJECTS) $(LIBRARIES) $(LINKING_FLAGS) -o $@
+	$(CC) $(COMP_FLAGS) $(OBJECTS) $(LIBRARIES) $(LINKING_FLAGS) -o $@
 
 clean:
 	$(MAKE) -C ./libft clean
