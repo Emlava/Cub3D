@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:43:01 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 18:36:24 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/24 21:18:34 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ static void	determine_steps(double *x_step, double *y_step, double ray_angle,
 }
 
 void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
-	double curr_intersection[2])
+	double curr_intersection[2], double ray_angle_in_rad)
 {
-	double	ray_angle_in_rad;
 	int		grid_coords[2];
 	double	x_step;
 	double	y_step;
@@ -72,7 +71,6 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 		curr_intersection[Y] = INT_MAX;
 		return ;
 	}
-	ray_angle_in_rad = (player->ray_angle * PI) / 180;
 	find_nearest_intersection(curr_intersection, player,
 		ray_angle_in_rad);
 	determine_steps(&x_step, &y_step, player->ray_angle, ray_angle_in_rad);

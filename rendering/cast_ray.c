@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 18:05:20 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/24 21:17:58 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ static double	d_from_player_to_wall(int player_coords[2],
 
 void	cast_ray(t_player_res *player, t_map_res *map_res)
 {
+	double			ray_angle_in_rad;
 	double			horizontal_wall_intersection[2];
 	double			vertical_wall_intersection[2];
 	double			distance_h;
 	double			distance_v;
 
-	check_horizontal_intersections(player, map_res, horizontal_wall_intersection);
-	check_vertical_intersections(player, map_res, vertical_wall_intersection);
+	ray_angle_in_rad = (player->ray_angle * PI) / 180;
+	check_horizontal_intersections(player, map_res, horizontal_wall_intersection,
+		ray_angle_in_rad);
+	check_vertical_intersections(player, map_res, vertical_wall_intersection,
+		ray_angle_in_rad);
 	distance_h = d_from_player_to_wall(player->coords, horizontal_wall_intersection);
 	distance_v = d_from_player_to_wall(player->coords, vertical_wall_intersection);
 	if (distance_h < distance_v)

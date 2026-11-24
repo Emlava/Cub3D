@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/22 18:08:49 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/24 21:27:25 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	return ;
 }
 
+// LEFT OFF HERE: Optimize
 void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res)
 {

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/23 21:42:48 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/24 20:43:44 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ void	assign_handlers_params(t_params *params, t_map_res *map_res,
 // LEFT OFF HERE
 void	set_hooks(t_params *params)
 {
-	// WASD
-	// Arrows
+	// WASD and arrows
+	mlx_hook(params->mlx_res->win, KeyPress, KeyPressMask, movement, params);
+	// ESC
 	mlx_key_hook(params->mlx_res->win, esc_exit, params);
 	// Cross
+	mlx_hook(params->mlx_res->win, DestroyNotify, StructureNotifyMask,
+		cross_exit, params);
 	return ;
 }
 
