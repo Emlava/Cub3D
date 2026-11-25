@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/24 21:27:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/25 18:40:19 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	projected_wall_height = (int)round((WORLD_SIDE_LENGTH / player->ray_length)
 		* player->d_to_proj_plane);
 
-	wall_start_position = (mlx_res->screen_size[Y] / 2)
+	wall_start_position = (mlx_res->window_size[Y] / 2)
 		- (projected_wall_height / 2);
 	if (wall_start_position < 0) // Projected wall is taller than screen
 		wall_start_position = 0;
@@ -69,14 +69,14 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	// Figure out how to know on what side of the map is the wall.
 	// Is it by checking the actual map coordinates or the ray angle?
 	// Draw wall slice
-	while (i < projected_wall_height && y < mlx_res->screen_size[Y])
+	while (i < projected_wall_height && y < mlx_res->window_size[Y])
 	{
 		draw_pixel(&mlx_res->img, column, y, 0x00663300);
 		y += 1;
 		i += 1;
 	}
 	// Draw floor slice
-	while (y < mlx_res->screen_size[Y])
+	while (y < mlx_res->window_size[Y])
 	{
 		draw_pixel(&mlx_res->img, column, y, map_res->floor);
 		y += 1;
@@ -94,7 +94,7 @@ void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	if (player->ray_angle < 0)
 		player->ray_angle += 360;
 	column = 0;
-	while (column < mlx_res->screen_size[X])
+	while (column < mlx_res->window_size[X])
 	{
 		cast_ray(player, map_res);
 		correct_fishbowl_effect(player);

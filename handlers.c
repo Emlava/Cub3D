@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 20:04:56 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/24 21:02:08 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/25 20:35:20 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 int	movement(int keycode, void *params)
 {
 	t_params	*params_ptr;
+	double		angle_of_mov;
+	double		x_step;
+	double		y_step;
 
 	params_ptr = params;
 	// Arrows
@@ -37,9 +40,42 @@ int	movement(int keycode, void *params)
 		else
 			params_ptr->player->viewing_angle = 360 - ROTATION_SPEED;
 	}
+	// WASD (Check uppercase and lowercase)
+	else
+	{
+	// 	if (keycode == XK_a)
+	// 	{
+	// 		angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle + 90);
+	// 		x_step = WALKING_SPEED * cos(angle_of_mov);
+	// 		y_step = WALKING_SPEED * sin(angle_of_mov);
+	// 		//
+	// 		printf("\nx_step: %f, y_step: %f\n", x_step, y_step);
+			//
+		// }
+		if (keycode == XK_w) // Add an else
+		{
+			angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle);
+			//
+			printf("Viewing angle: %d\n", params_ptr->player->viewing_angle);
+			//
+			x_step = WALKING_SPEED * cos(angle_of_mov);
+			y_step = WALKING_SPEED * sin(angle_of_mov);
+			params_ptr->player->coords[X] -= x_step;
+			params_ptr->player->coords[Y] -= y_step;
+		}
+		// else if (keycode == XK_d)
+		// {}
+		// else if (keycode == XK_s)
+		// {}
+		else
+			return (0);
+		// Check new coords are not inside a wall
+		// If both coords are inside a wall, no new frame is rendered
+		// If only one coord is inside a wall, the one that is not is assigned
+		// to the player's corresponding coord, and the one that is gets replaced
+		// by the coord next to the wall, moving together with the other one
 
-	// WASD
-
+	}
 
 	render_frame(params_ptr->player, params_ptr->mlx_res, params_ptr->map_res);
 	return (0);

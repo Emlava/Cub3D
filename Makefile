@@ -3,7 +3,7 @@ CC = cc
 COMP_FLAGS = -Wall -Werror -Wextra -std=gnu99
 LINKING_FLAGS = -lXext -lX11 -lm
 LIBRARIES = libft/libft.a minilibx-linux/libmlx_Linux.a
-OBJECTS = obj/main.o obj/prepare_display.o obj/cleaning.o obj/parsing/process_file.o \
+OBJECTS = obj/main.o obj/utils.o obj/prepare_display.o obj/cleaning.o obj/parsing/process_file.o \
 obj/parsing/store_textures_and_colors.o obj/parsing/get_fields.o obj/parsing/field_utils.o \
 obj/parsing/store_map.o obj/parsing/parse_map.o obj/parsing/map_utils.o \
 obj/parsing/parsing_cleaning.o obj/rendering/render_frame.o obj/rendering/cast_ray.o \

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:41:02 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/24 22:20:42 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/25 19:33:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	print_info(t_player_res *player, t_mlx_res *mlx_res)
 	ft_printf("Player's viewing angle: %d\n", player->viewing_angle);
 	printf("Player's distance to projection plane: %.2f\n", player->d_to_proj_plane);
 	printf("Angle between rays: %g\n", player->angle_between_rays);
-	printf("Width of screen: %d\n", mlx_res->screen_size[X]);
-	printf("Height of screen: %d\n", mlx_res->screen_size[Y]);
+	printf("Width of screen: %d\n", mlx_res->window_size[X]);
+	printf("Height of screen: %d\n", mlx_res->window_size[Y]);
 	return ;
 }
 
@@ -40,7 +40,7 @@ void	get_player_info(t_player_res *player, int width_of_plane)
 	double	tan_of_theta;
 	
 	opposite = width_of_plane / 2.0;
-	theta_in_rad = ((FOV / 2.0) * PI) / 180;
+	theta_in_rad = degrees_to_rad(FOV / 2.0);
 	tan_of_theta = tan(theta_in_rad);
 	player->d_to_proj_plane = opposite / tan_of_theta;
 	player->angle_between_rays = (double)FOV / width_of_plane;
@@ -56,7 +56,6 @@ void	assign_handlers_params(t_params *params, t_map_res *map_res,
 	return ;
 }
 
-// LEFT OFF HERE
 void	set_hooks(t_params *params)
 {
 	// WASD and arrows
@@ -78,10 +77,10 @@ int	main(int ac, char *av[])
 
 	process_file(ac, av, &map_res, &player);
 	prepare_display(&mlx_res, &map_res);
-	get_player_info(&player, mlx_res.screen_size[X]);
+	get_player_info(&player, mlx_res.window_size[X]);
 	assign_handlers_params(&params, &map_res, &player, &mlx_res);
-	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.screen_size[X],
-		mlx_res.screen_size[Y], av[1]);
+	mlx_res.win = mlx_new_window(mlx_res.mlx_id, mlx_res.window_size[X],
+		mlx_res.window_size[Y], av[1]);
 	if (!mlx_res.win)
 		clean_and_exit(&mlx_res, &map_res, EXIT_FAILURE);
 	render_frame(&player, &mlx_res, &map_res);
