@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/12 17:34:52 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 14:56:54 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 19:18:40 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,4 @@ t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
 		return (FALSE);
 	}
 	return (TRUE);
-}
-
-t_bool	wall_check(int grid_coords[2], t_map_res *map_res)
-{
-	if (map_res->map[grid_coords[Y]][grid_coords[X]] == '1')
-		return (TRUE);
-	return (FALSE);
 }

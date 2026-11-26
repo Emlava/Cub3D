@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 14:55:51 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 19:19:08 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
 	determine_steps(&x_step, &y_step, player->ray_angle, ray_angle_in_rad);
 	define_grid_coords(curr_intersection, grid_coords, player->ray_angle);
 	while (is_inside_the_map(grid_coords, map_res, curr_intersection)
-		&& !wall_check(grid_coords, map_res))
+		&& !wall_check(grid_coords, map_res->map))
 	{
 		curr_intersection[X] += x_step;
 		curr_intersection[Y] += y_step;

@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 15:31:02 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 18:28:45 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	int		column;
 
 	player->ray_angle = player->viewing_angle + (FOV / 2);
-	if (player->ray_angle < 0)
-		player->ray_angle += 360;
+	if (player->ray_angle > 359)
+		player->ray_angle -= 360;
 	column = 0;
 	while (column < mlx_res->window_size[X])
 	{

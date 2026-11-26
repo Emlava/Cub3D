@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 14:59:26 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 20:25:43 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@
 # define WORLD_SIDE_LENGTH 64
 # define PLAYERS_HEIGHT (WORLD_SIDE_LENGTH / 2)
 # define FOV 60
-# define ROTATION_SPEED 1
-# define WALKING_SPEED 10
+# define ROTATION_SPEED 2
+# define UNITS_PER_STEP 10
 # define MALLOC_FAILURE -2
+# define INVALID_MOVEMENT 1
 
 // Things to free/close/destroy
 // -mlx_id
@@ -175,10 +176,10 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 // rendering/ray_utils.c
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
 			double intersection[2]);
-t_bool	wall_check(int grids_coords[2], t_map_res *map_res);
 	
 // utils.c
 double	degrees_to_rad(double degrees);
+t_bool	wall_check(int grid_coords[2], char **map);
 
 // handlers.h
 int		esc_exit(int keycode, void *params);
