@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 20:04:56 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 20:27:11 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 22:31:34 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,20 +97,18 @@ int	movement(int keycode, void *params)
 	params_ptr = params;
 	if (keycode == XK_Left)
 	{
-		if (params_ptr->player->viewing_angle != 359)
-			params_ptr->player->viewing_angle += ROTATION_SPEED;
-		else
-			params_ptr->player->viewing_angle = 0 + ROTATION_SPEED - 1;
+		params_ptr->player->viewing_angle += ROTATION_SPEED;
+		if (params_ptr->player->viewing_angle >= 360)
+			params_ptr->player->viewing_angle -= 360;
 		//
 		printf("Viewing angle: %d\n", params_ptr->player->viewing_angle);
 		//
 	}
 	else if (keycode == XK_Right)
 	{
-		if (params_ptr->player->viewing_angle != 0)
-			params_ptr->player->viewing_angle -= ROTATION_SPEED;
-		else
-			params_ptr->player->viewing_angle = 360 - ROTATION_SPEED;
+		params_ptr->player->viewing_angle -= ROTATION_SPEED;
+		if (params_ptr->player->viewing_angle < 0)
+			params_ptr->player->viewing_angle += 360;
 		//
 		printf("Viewing angle: %d\n", params_ptr->player->viewing_angle);
 		//
