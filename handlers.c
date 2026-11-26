@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 20:04:56 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/25 20:35:20 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 15:33:54 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	movement(int keycode, void *params)
 	double		y_step;
 
 	params_ptr = params;
-	// Arrows
+	//
+	printf("Viewing angle: %d\n", params_ptr->player->viewing_angle);
+	//
 	if (keycode == XK_Left)
 	{
 		if (params_ptr->player->viewing_angle != 359)
@@ -40,43 +42,31 @@ int	movement(int keycode, void *params)
 		else
 			params_ptr->player->viewing_angle = 360 - ROTATION_SPEED;
 	}
-	// WASD (Check uppercase and lowercase)
 	else
 	{
-	// 	if (keycode == XK_a)
-	// 	{
-	// 		angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle + 90);
-	// 		x_step = WALKING_SPEED * cos(angle_of_mov);
-	// 		y_step = WALKING_SPEED * sin(angle_of_mov);
-	// 		//
-	// 		printf("\nx_step: %f, y_step: %f\n", x_step, y_step);
-			//
-		// }
-		if (keycode == XK_w) // Add an else
-		{
+		if (keycode == XK_a)
+			angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle + 90);
+		else if (keycode == XK_w)
 			angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle);
-			//
-			printf("Viewing angle: %d\n", params_ptr->player->viewing_angle);
-			//
-			x_step = WALKING_SPEED * cos(angle_of_mov);
-			y_step = WALKING_SPEED * sin(angle_of_mov);
-			params_ptr->player->coords[X] -= x_step;
-			params_ptr->player->coords[Y] -= y_step;
-		}
-		// else if (keycode == XK_d)
-		// {}
-		// else if (keycode == XK_s)
-		// {}
+		else if (keycode == XK_d)
+			angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle - 90);
+		else if (keycode == XK_s)
+			angle_of_mov = degrees_to_rad(params_ptr->player->viewing_angle - 180);
 		else
 			return (0);
+		x_step = WALKING_SPEED * cos(angle_of_mov);
+		y_step = WALKING_SPEED * sin(angle_of_mov);
+
 		// Check new coords are not inside a wall
 		// If both coords are inside a wall, no new frame is rendered
 		// If only one coord is inside a wall, the one that is not is assigned
 		// to the player's corresponding coord, and the one that is gets replaced
 		// by the coord next to the wall, moving together with the other one
 
+		params_ptr->player->coords[X] += x_step;
+		params_ptr->player->coords[Y] -= y_step;
 	}
-
+	// LEFT OFF HERE: Bugs appear when going from 0 to 359 degrees
 	render_frame(params_ptr->player, params_ptr->mlx_res, params_ptr->map_res);
 	return (0);
 }
@@ -89,7 +79,7 @@ int	esc_exit(int keycode, void *params)
 		return (0);
 	params_ptr = (t_params *)params;
 	clean_and_exit(params_ptr->mlx_res, params_ptr->map_res, EXIT_SUCCESS);
-	return (0); // To avoid compilation warnings
+	return (0);
 }
 
 int	cross_exit(void *params)
@@ -98,5 +88,5 @@ int	cross_exit(void *params)
 
 	params_ptr = (t_params *)params;
 	clean_and_exit(params_ptr->mlx_res, params_ptr->map_res, EXIT_SUCCESS);
-	return (0); // To avoid compilation warnings
+	return (0);
 }

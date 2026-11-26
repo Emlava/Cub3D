@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/06 10:58:34 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/25 18:40:19 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 15:31:02 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,7 @@ static void	correct_fishbowl_effect(t_player_res *player)
 	double	diff_in_radians;
 
 	ray_and_view_diff = player->viewing_angle - player->ray_angle;
-	if (ray_and_view_diff < 0)
-	{
-		// The viewing angle is to the left of degree 0, and the ray is to the right
-		if (player->ray_angle > (player->viewing_angle + (FOV / 2)))
-			ray_and_view_diff += 360;
-		else // The ray is to the left of the viewing angle
-		ray_and_view_diff = -ray_and_view_diff;
-	}
-	diff_in_radians = (ray_and_view_diff * PI) / 180;
+	diff_in_radians = degrees_to_rad(ray_and_view_diff);
 	player->ray_length *= cos(diff_in_radians);
 	return ;
 }
@@ -84,7 +76,6 @@ static void	draw_column(t_mlx_res *mlx_res, t_player_res *player, t_map_res *map
 	return ;
 }
 
-// LEFT OFF HERE: Optimize
 void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
 	t_map_res *map_res)
 {

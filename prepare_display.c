@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/20 15:22:30 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/25 18:58:36 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 15:08:15 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	prepare_display(t_mlx_res *mlx_res, t_map_res *map_res)
 		return (-1);
 	mlx_get_screen_size(mlx_res->mlx_id, &mlx_res->window_size[X],
 		&mlx_res->window_size[Y]);
-	mlx_res->window_size[X] *= 0.75;
-	mlx_res->window_size[Y] *= 0.75;
+	mlx_res->window_size[X] *= 0.5;
+	mlx_res->window_size[Y] *= 0.5;
 	if (open_textures(mlx_res, map_res) == -1 || create_image(mlx_res) == -1)
 		return (-1);
 	return (0);

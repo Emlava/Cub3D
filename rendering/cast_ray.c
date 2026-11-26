@@ -6,13 +6,13 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/24 21:17:58 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 14:54:13 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static double	d_from_player_to_wall(int player_coords[2],
+static double	d_from_player_to_wall(double player_coords[2],
 	double wall_coords[2])
 {
 	double	x_diff;
@@ -31,7 +31,7 @@ void	cast_ray(t_player_res *player, t_map_res *map_res)
 	double			distance_h;
 	double			distance_v;
 
-	ray_angle_in_rad = (player->ray_angle * PI) / 180;
+	ray_angle_in_rad = degrees_to_rad(player->ray_angle);
 	check_horizontal_intersections(player, map_res, horizontal_wall_intersection,
 		ray_angle_in_rad);
 	check_vertical_intersections(player, map_res, vertical_wall_intersection,

@@ -6,13 +6,13 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/15 14:03:24 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/24 21:18:25 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 14:55:51 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-static void	find_nearest_intersection(double curr_intersection[2],
+static void	find_nearest_intersection(double curr_intersection[2], // CHECK ROUNDING
 	t_player_res *player, double ray_angle_in_rad)
 {
 	curr_intersection[Y] = (int)(player->coords[Y] / WORLD_SIDE_LENGTH)

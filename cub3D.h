@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/25 20:33:52 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/26 14:59:26 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_map_buff
 
 typedef struct s_player_resources
 {
-	int		coords[2];
+	double	coords[2];
 	int		viewing_angle;
 	double	d_to_proj_plane;
 	double	angle_between_rays;
