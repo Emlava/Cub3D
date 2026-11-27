@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/27 11:58:56 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/27 18:17:04 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ typedef struct s_player_resources
 	int		viewing_angle;
 	double	d_to_proj_plane;
 	double	angle_between_rays;
-	double	ray_angle;
-	double	ray_length;
+	double	curr_r_angle;
+	double	curr_r_length;
+	double	curr_h_wall_intersection[2];
+	double	curr_v_wall_intersection[2];
 }	t_player_res;
 
 typedef struct s_img
@@ -95,6 +97,7 @@ typedef struct s_texture
 {
 	void	*id;
 	int		size[2];
+	int		offset[2];
 	char	*addr;
 	int		bits_per_pixel;
 	int		size_line;
@@ -115,14 +118,16 @@ typedef struct s_mlx_resources
 
 typedef struct s_column
 {
-	int		n;
+	int			nbr;
+	int			y;
 	enum
 	{
 		NORTH,
 		SOUTH,
 		WEST,
 		EAST
-	}	e_wall_type;
+	}			e_wall_type;
+	t_texture	*texture;
 }	t_column;
 
 typedef struct s_handlers_params
@@ -179,11 +184,11 @@ int		cast_ray(t_player_res *player, t_map_res *map_res);
 
 // horizontal_intersections.c
 void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
-			double curr_intersection[2], double ray_angle_in_rad);
+			double ray_angle_in_rad);
 
 // vertical_intersections.c
 void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
-			double curr_intersection[2], double ray_angle_in_rad);
+			double ray_angle_in_rad);
 
 // rendering/ray_utils.c
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
