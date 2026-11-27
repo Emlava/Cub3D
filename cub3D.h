@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/18 17:38:48 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 22:33:38 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/27 11:58:56 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define Y 1
 # define PI 3.14159
 # define WORLD_SIDE_LENGTH 64
-# define PLAYERS_HEIGHT (WORLD_SIDE_LENGTH / 2)
+# define PLAYERS_HEIGHT 32
 # define FOV 60
 # define ROTATION_SPEED 2
 # define UNITS_PER_STEP 10
@@ -50,7 +50,7 @@
 // -line
 // -map_buff nodes (not the row variables)
 
-typedef int	t_bool;
+typedef char	t_bool;
 
 typedef struct s_map_resources
 {
@@ -113,6 +113,18 @@ typedef struct s_mlx_resources
 	t_texture	east;
 }	t_mlx_res;
 
+typedef struct s_column
+{
+	int		n;
+	enum
+	{
+		NORTH,
+		SOUTH,
+		WEST,
+		EAST
+	}	e_wall_type;
+}	t_column;
+
 typedef struct s_handlers_params
 {
 	t_map_res		*map_res;
@@ -160,10 +172,10 @@ int		prepare_display(t_mlx_res *mlx_res, t_map_res *map_res);
 
 // rendering/render_frame.c
 void	render_frame(t_player_res *player, t_mlx_res *mlx_res,
-	t_map_res *map_res);
+			t_map_res *map_res);
 
 // rendering/cast_ray.c
-void	cast_ray(t_player_res *player, t_map_res *map_res);
+int		cast_ray(t_player_res *player, t_map_res *map_res);
 
 // horizontal_intersections.c
 void	check_horizontal_intersections(t_player_res *player, t_map_res *map_res,
@@ -176,17 +188,17 @@ void	check_vertical_intersections(t_player_res *player, t_map_res *map_res,
 // rendering/ray_utils.c
 t_bool	is_inside_the_map(int grid_coords[2], t_map_res *map_res,
 			double intersection[2]);
-	
+
 // utils.c
 double	degrees_to_rad(double degrees);
 t_bool	wall_check(int grid_coords[2], char **map);
 
 // handlers.h
+int		movement(int keycode, void *params);
 int		esc_exit(int keycode, void *params);
 int		cross_exit(void *params);
 
 // cleaning.c
-int		movement(int keycode, void *params);
 void	destroy_mlx_res(t_mlx_res *mlx_res);
 void	clean_and_exit(t_mlx_res *mlx_res, t_map_res *map_res, int exit_status);
 

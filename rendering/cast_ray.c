@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 17:55:47 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 14:54:13 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/27 12:00:59 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static double	d_from_player_to_wall(double player_coords[2],
 	return (sqrt(pow(x_diff, 2.0) + pow(y_diff, 2.0)));
 }
 
-void	cast_ray(t_player_res *player, t_map_res *map_res)
+int	cast_ray(t_player_res *player, t_map_res *map_res)
 {
 	double			ray_angle_in_rad;
 	double			horizontal_wall_intersection[2];
@@ -39,8 +39,14 @@ void	cast_ray(t_player_res *player, t_map_res *map_res)
 	distance_h = d_from_player_to_wall(player->coords, horizontal_wall_intersection);
 	distance_v = d_from_player_to_wall(player->coords, vertical_wall_intersection);
 	if (distance_h < distance_v)
+	{
 		player->ray_length = distance_h;
-	else
-		player->ray_length = distance_v;
-	return ;
+		if (player->ray_angle < 180)
+			return (NORTH);
+		return (SOUTH);
+	}
+	player->ray_length = distance_v;
+	if (player->ray_angle > 90 && player->ray_angle < 270)
+		return (WEST);
+	return (EAST);
 }
