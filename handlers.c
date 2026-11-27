@@ -6,7 +6,7 @@
 /*   By: elara-va <elara-va@student.42belgium.be    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/23 20:04:56 by elara-va          #+#    #+#             */
-/*   Updated: 2026/11/26 22:31:34 by elara-va         ###   ########.fr       */
+/*   Updated: 2026/11/27 20:25:36 by elara-va         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	determine_new_coords(t_player_res *player, t_map_res *map_res,
 		printf("Wall hit\n");
 		return (INVALID_MOVEMENT);
 	}
+	
+	// The player goes slightly inside north and west walls
 
 	//
 	printf("step_x: %f, step_y: %f, player_x: %f, player_y: %f, grid_x: %d, grid_y: %d\n", x_step, y_step,
